@@ -45,7 +45,7 @@ void SampleModel::draw()
 	setAmbientColor(.1f,.1f,.1f);
 	setDiffuseColor(COLOR_GREEN);
 	glPushMatrix();
-	glTranslated(VAL(XPOS), VAL(YPOS), VAL(ZPOS));
+	glTranslated(VAL(XPOS), VAL(YPOS), VAL(ZPOS));	// Get the value from slider
 
 		glPushMatrix();
 		glTranslated(-1.5, 0, -2);
@@ -82,6 +82,7 @@ int main()
     controls[HEIGHT] = ModelerControl("Height", 1, 2.5, 0.1f, 1);
 	controls[ROTATE] = ModelerControl("Rotate", -135, 135, 1, 0);
 
-    ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS);
-    return ModelerApplication::Instance()->Run();
+	
+    ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS); // Use the controls array to create the appropriate sliders.
+    return ModelerApplication::Instance()->Run();	// Run the application.
 }

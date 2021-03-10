@@ -15,11 +15,12 @@ struct ModelerControl
 	ModelerControl& operator=(const ModelerControl &o);
 	void SetVals(const char* name, float minimum, float maximum, float stepsize, float value);
 
-	char  m_name[128];
-	float m_minimum;
-	float m_maximum;
-	float m_stepsize;
-	float m_value;
+	// Information of the slider
+	char  m_name[128];		// Name of the slider
+	float m_minimum;		// Minimum value of the slider
+	float m_maximum;		// Maximum value of the slider
+	float m_stepsize;		// Step size of the slider
+	float m_value;			// Default value of the slider
 };
 
 // Forward declarations for ModelerApplication

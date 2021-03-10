@@ -178,9 +178,48 @@ void Camera::applyViewingTransform() {
 
 	// Place the camera at mPosition, aim the camera at
 	// mLookAt, and twist the camera such that mUpVector is up
+
+	// Original lookAt function
+	/*
 	gluLookAt(	mPosition[0], mPosition[1], mPosition[2],
 				mLookAt[0],   mLookAt[1],   mLookAt[2],
 				mUpVector[0], mUpVector[1], mUpVector[2]);
+	*/
+
+	this->lookAt(this->mPosition, this->mLookAt, this->mUpVector);
+}
+	
+
+
+// Self-defined lookAt function
+void Camera::lookAt(Vec3f eye, Vec3f at, Vec3f up) {
+	
+	// Calculate the unit vector pointing from eye to reference point
+	Vec3f forward = eye - at;
+	forward.normalize();
+
+	// Calculate the unit vector pointing to the left direction of the  camera 
+	Vec3f left = up ^ forward;
+	left.normalize();
+
+	// Calculate the unit vector pointing to the same direction with up vector
+	up = forward ^ left;
+
+	// Construct the world to model view matrix
+	Mat4f matrix = {	
+		left[0]   , left[1]   , left[2]	  , 0,
+		up[0]     , up[1]     , up[2]     , 0,
+		forward[0], forward[1], forward[2], 0,
+		0		  , 0         , 0         , 1
+	};
+
+	// Convert the OpenGL format
+	float modelViewMatrix[16];
+	matrix.getGLMatrix(modelViewMatrix);
+
+	// Apply the change
+	glMultMatrixf(modelViewMatrix);
+	glTranslated(-eye[0], -eye[1], -eye[2]);
 }
 
 #pragma warning(pop)
