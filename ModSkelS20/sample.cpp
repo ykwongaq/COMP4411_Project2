@@ -606,7 +606,7 @@ int main()
 	controls[RIGHT_WRIST_X_ROTATE] = ModelerControl("Right Wrist X Rotate", -135, 110, 1, 5);
 	controls[RIGHT_WRIST_Y_ROTATE] = ModelerControl("Right Wrist Y Rotate", -135, 120, 1, 0);
 	controls[RIGHT_WRIST_Z_ROTATE] = ModelerControl("Right Wrist Z Rotate", -130, 130, 1, 0);
-	controls[PICKING] = ModelerControl("Picking", 0, -90, 1, 0);
+	controls[PICKING] = ModelerControl("Picking", 0, -100, 1, 0);
 
 	
     ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS); // Use the controls array to create the appropriate sliders.
