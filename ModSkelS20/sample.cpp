@@ -313,36 +313,53 @@ void SampleModel::draw()
 		// need the whole body rotation
 		glPushMatrix();
 		glRotated(90, 1.0, 0.0, 0.0);
+		glTranslated(0.0, 0.0, -VAL(HEIGHT));
+
 		/***this 0 can be changed as "upper body rotation"***/
-		glRotated(VAL(ROTATE), 0.0, 0.0, 1.0);
+		glRotated(VAL(WHOLE_UPPER_BODY_ROTATE), 0.0, 0.0, 1.0);
 		
 		SampleModel::drawUpperBody();
 
 		//draw the head
 		glTranslated(0, 0, -6);
 		/***can add XYZ head rotation as "head rotation"***/
-		//glRotated(VAL(ROTATE), 0.0, 0.0, 1.0);
-		glRotated(0, 0.0, 0.0, 1.0);
+		glRotated(VAL(HEAD_X_ROTATE), 1.0, 0.0, 0.0);
+		glRotated(VAL(HEAD_Y_ROTATE), 0.0, 1.0, 0.0);
+		glRotated(VAL(HEAD_Z_ROTATE), 0.0, 0.0, 1.0);
 
 		SampleModel::drawHead();
 		SampleModel::drawHorn();
 
 		//translate back
-		//glRotated(-VAL(ROTATE), 0.0, 0.0, 1.0);
+		glRotated(-VAL(HEAD_Z_ROTATE), 0.0, 0.0, 1.0);
+		glRotated(-VAL(HEAD_Y_ROTATE), 0.0, 1.0, 0.0);
+		glRotated(-VAL(HEAD_X_ROTATE), 1.0, 0.0, 0.0);
 		glRotated(0, 0.0, 0.0, 1.0);
 		glTranslated(0, 0, 6.5);
 
 		//draw the left arm
 		glTranslated(3.8, 0.0, -6.5);
 		/*** here can add XYZ " left showder rotation"***/
-		glRotated(8, 1.0, 0.0, 0.0);
-		
+
+		glRotated(VAL(LEFT_SHOULDER_X_ROTATE), 1.0, 0.0, 0.0);
+		glRotated(VAL(LEFT_SHOULDER_Y_ROTATE), 0.0, 1.0, 0.0);
+		glRotated(VAL(LEFT_SHOULDER_Z_ROTATE), 0.0, 0.0, 1.0);
+
+		//for picking
+		glRotated(VAL(PICKING), 0.0, 0.0, 1.0);
+
 		SampleModel::drawLeftUpperArm();
 
 		// albow
 		glTranslated(0.8, 0.0, 4);
 		/*** here can add XYZ "left albow rotation"***/
-		glRotated(-10, 1.0, 0.0, 0.0);
+		glRotated(VAL(LEFT_ALBOW_X_ROTATE), 1.0, 0.0, 0.0);
+		glRotated(VAL(LEFT_ALBOW_Y_ROTATE), 0.0, 1.0, 0.0);
+		glRotated(VAL(LEFT_ALBOW_Z_ROTATE), 0.0, 0.0, 1.0);
+
+		//for picking
+		glRotated(VAL(PICKING), 0.0, 1.0, 0.0);
+
 		setDiffuseColor(COLOR_RED);
 
 		drawSphere(0.25f);
@@ -354,7 +371,12 @@ void SampleModel::draw()
 		//left wrist
 		glTranslated(-0.5, 0.0, 3.25);
 		/*** here can add XYZ "left wrist rotation"***/
-		glRotated(-5, 1.0, 0.0, 0.0);
+		glRotated(VAL(LEFT_WRIST_X_ROTATE), 1.0, 0.0, 0.0);
+		glRotated(VAL(LEFT_WRIST_Y_ROTATE), 0.0, 1.0, 0.0);
+		glRotated(VAL(LEFT_WRIST_Z_ROTATE), 0.0, 0.0, 1.0);
+
+		//for picking
+		glRotated(VAL(PICKING), 0.0, 1.0, 0.0);
 		
 		setDiffuseColor(COLOR_RED);
 
@@ -387,45 +409,72 @@ void SampleModel::draw()
 		glTranslated(0, -0.35, 0);
 		glTranslated(0, +0.35, 0);
 		glRotated(-7, 0.0, 1.0, 0.0);
+
 		/*** here can add XYZ "left wrist rotation"***/
-		glRotated(5, 1.0, 0.0, 0.0);
+		glRotated(-VAL(PICKING), 0.0, 1.0, 0.0);
+		glRotated(-VAL(LEFT_WRIST_Z_ROTATE), 0.0, 0.0, 1.0);
+		glRotated(-VAL(LEFT_WRIST_Y_ROTATE), 0.0, 1.0, 0.0);
+		glRotated(-VAL(LEFT_WRIST_X_ROTATE), 1.0, 0.0, 0.0);
 		glTranslated(0.5, 0.0, -3.25);
 		/*** here can add XYZ "left albow rotation"***/
-		glRotated(10, 1.0, 0.0, 0.0);
+		glRotated(-VAL(PICKING), 0.0, 1.0, 0.0);
+		glRotated(-VAL(LEFT_ALBOW_Z_ROTATE), 0.0, 0.0, 1.0);
+		glRotated(-VAL(LEFT_ALBOW_Y_ROTATE), 0.0, 1.0, 0.0);
+		glRotated(-VAL(LEFT_ALBOW_X_ROTATE), 1.0, 0.0, 0.0);
 		glTranslated(-0.8, 0.0, -4);
-		/*** here can add XYZ " left showder rotation"***/
-		glRotated(-8, 1.0, 0.0, 0.0);
+		/***translate back the left shoulder rotation***/
+		glRotated(-VAL(PICKING), 0.0, 0.0, 1.0);
+		glRotated(-VAL(LEFT_SHOULDER_Z_ROTATE), 0.0, 0.0, 1.0);
+		glRotated(-VAL(LEFT_SHOULDER_Y_ROTATE), 0.0, 1.0, 0.0);
+		glRotated(-VAL(LEFT_SHOULDER_X_ROTATE), 1.0, 0.0, 0.0);
 		glTranslated(-3.8, 0.0, 6.5);
 
 		//draw the right arm
 		glTranslated(-3.8, 0.0, -6.5);
 		/*** here can add XYZ " right showder rotation"***/
-		glRotated(8, 1.0, 0.0, 0.0);
+		glRotated(-VAL(RIGHT_SHOULDER_X_ROTATE), 1.0, 0.0, 0.0);
+		glRotated(-VAL(RIGHT_SHOULDER_Y_ROTATE), 0.0, 1.0, 0.0);
+		glRotated(-VAL(RIGHT_SHOULDER_Z_ROTATE), 0.0, 0.0, 1.0);
+
+		//for picking
+		glRotated(-VAL(PICKING), 0.0, 0.0, 1.0);
+
 		SampleModel::drawRightUpperArm();
 
 		// albow
 		glTranslated(-0.8, 0.0, 4);
 		/*** here can add XYZ "right albow rotation"***/
-		glRotated(-10, 1.0, 0.0, 0.0);
+		glRotated(-VAL(RIGHT_ALBOW_X_ROTATE), 1.0, 0.0, 0.0);
+		glRotated(-VAL(RIGHT_ALBOW_Y_ROTATE), 0.0, 1.0, 0.0);
+		glRotated(-VAL(RIGHT_ALBOW_Z_ROTATE), 0.0, 0.0, 1.0);
+
+		//for picking
+		glRotated(-VAL(PICKING), 0.0, 1.0, 0.0);
+
 		setDiffuseColor(COLOR_RED);
 
 		drawSphere(0.25f);
 		setDiffuseColor(COLOR_GREEN);
 
-		// left fore arm
+		//right fore arm
 		SampleModel::drawRightLowerArm();
 
-		//left wrist
+		//right wrist
 		glTranslated(0.5, 0.0, 3.25);
 		/*** here can add XYZ "left wrist rotation"***/
-		glRotated(-5, 1.0, 0.0, 0.0);
+		glRotated(-VAL(RIGHT_WRIST_X_ROTATE), 1.0, 0.0, 0.0);
+		glRotated(-VAL(RIGHT_WRIST_Y_ROTATE), 0.0, 1.0, 0.0);
+		glRotated(-VAL(RIGHT_WRIST_Z_ROTATE), 0.0, 0.0, 1.0);
+
+		//for picking
+		glRotated(-VAL(PICKING), 0.0, 1.0, 0.0);
 
 		setDiffuseColor(COLOR_RED);
 
 		drawSphere(0.15f);
 		setDiffuseColor(COLOR_GREEN);
 
-		//left paw
+		//right paw
 		glRotated(-7, 0.0, 1.0, 0.0);
 		glTranslated(0, -0.35, 0);
 		drawBox(-0.1f, 0.7, 0.7);
@@ -548,8 +597,30 @@ int main()
     controls[XPOS] = ModelerControl("X Position", -5, 5, 0.1f, 0);
     controls[YPOS] = ModelerControl("Y Position", 0, 5, 0.1f, 0);
     controls[ZPOS] = ModelerControl("Z Position", -5, 5, 0.1f, 0);
-    controls[HEIGHT] = ModelerControl("Height", 1, 2.5, 0.1f, 1);
-	controls[ROTATE] = ModelerControl("Rotate", -135, 135, 1, 0);
+	controls[HEIGHT] = ModelerControl("Height", -0.4, 0.4, 0.01f, 0);
+	controls[WHOLE_UPPER_BODY_ROTATE] = ModelerControl("Whole Upper Body Rotate", -180, 180, 1, 0);
+	controls[HEAD_X_ROTATE] = ModelerControl("Head X Rotate", -70, 30, 1, 0);
+	controls[HEAD_Y_ROTATE] = ModelerControl("Head Y Rotate", -60, 60, 1, 0);
+	controls[HEAD_Z_ROTATE] = ModelerControl("Head Z Rotate", -80, 80, 1, 0);
+	controls[LEFT_SHOULDER_X_ROTATE] = ModelerControl("Left Shoulder X Rotate", -180, 180, 1, 8);
+	controls[LEFT_SHOULDER_Y_ROTATE] = ModelerControl("Left Shoulder Y Rotate", -30, 180, 1, 0);
+	controls[LEFT_SHOULDER_Z_ROTATE] = ModelerControl("Left Shoulder Z Rotate", -100, 100, 1, 0);
+	controls[LEFT_ALBOW_X_ROTATE] = ModelerControl("Left Albow X Rotate", -135, 110, 1, -10);
+	controls[LEFT_ALBOW_Y_ROTATE] = ModelerControl("Left Albow Y Rotate", -135, 120, 1, 0);
+	controls[LEFT_ALBOW_Z_ROTATE] = ModelerControl("Left Albow Z Rotate", -130, 130, 1, 0);
+	controls[LEFT_WRIST_X_ROTATE] = ModelerControl("Left Wrist X Rotate", -135, 110, 1, -5);
+	controls[LEFT_WRIST_Y_ROTATE] = ModelerControl("Left Wrist Y Rotate", -135, 120, 1, 0);
+	controls[LEFT_WRIST_Z_ROTATE] = ModelerControl("Left Wrist Z Rotate", -130, 130, 1, 0);
+	controls[RIGHT_SHOULDER_X_ROTATE] = ModelerControl("Right Shoulder X Rotate", -180, 180, 1, -8);
+	controls[RIGHT_SHOULDER_Y_ROTATE] = ModelerControl("Right Shoulder Y Rotate", -30, 180, 1, 0);
+	controls[RIGHT_SHOULDER_Z_ROTATE] = ModelerControl("Right Shoulder Z Rotate", -100, 100, 1, 0);
+	controls[RIGHT_ALBOW_X_ROTATE] = ModelerControl("Right Albow X Rotate", -135, 110, 1, 10);
+	controls[RIGHT_ALBOW_Y_ROTATE] = ModelerControl("Right Albow Y Rotate", -135, 120, 1, 0);
+	controls[RIGHT_ALBOW_Z_ROTATE] = ModelerControl("Right Albow Z Rotate", -130, 130, 1, 0);
+	controls[RIGHT_WRIST_X_ROTATE] = ModelerControl("Right Wrist X Rotate", -135, 110, 1, 5);
+	controls[RIGHT_WRIST_Y_ROTATE] = ModelerControl("Right Wrist Y Rotate", -135, 120, 1, 0);
+	controls[RIGHT_WRIST_Z_ROTATE] = ModelerControl("Right Wrist Z Rotate", -130, 130, 1, 0);
+	controls[PICKING] = ModelerControl("Picking", 0, -100, 1, 0);
 
 	controls[RIGHT_LEG_X_ROTATE] = ModelerControl("Right Leg X Rotate", -100, 60, 1, 0);
 	controls[RIGHT_LEG_Y_ROTATE] = ModelerControl("Right Leg Y Rotate", -10, 40, 1, 0);
