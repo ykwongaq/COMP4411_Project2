@@ -1,48 +1,14 @@
-// The sample model.  You should build a file
-// very similar to this for when you make your model.
-#include "modelerview.h"
-#include "modelerapp.h"
-#include "modelerdraw.h"
 #include <FL/gl.h>
 #include <cmath>
 
+#include "model.h"
+#include "modelerview.h"
+#include "modelerdraw.h"
 #include "modelerglobals.h"
-
-// To make a SampleModel, we inherit off of ModelerView
-class SampleModel : public ModelerView 
-{
-public:
-    SampleModel(int x, int y, int w, int h, char *label) 
-        : ModelerView(x,y,w,h,label) { }
-
-    virtual void draw();
-
-private:
-	void drawUpperBody();
-	void drawHead();
-	void drawHorn();
-	void drawLeftUpperArm();
-	void drawLeftLowerArm();
-	void drawRightUpperArm();
-	void drawRightLowerArm();
-	void drawLowerBody();
-	void drawRightUpperLeg();
-	void drawRightLowerLeg();
-	void drawRightFoot();
-	void drawLeftUpperLeg();
-	void drawLeftLowerLeg();
-	void drawLeftFoot();
-};
-
-// We need to make a creator function, mostly because of
-// nasty API stuff that we'd rather stay away from.
-ModelerView* createSampleModel(int x, int y, int w, int h, char *label)
-{ 
-    return new SampleModel(x,y,w,h,label); 
-}
+#include "modelerapp.h"
 
 // Draw uppper body of the robot
-void SampleModel::drawUpperBody() {
+void Model::drawUpperBody() {
 	drawTriangle(4, 0, -6, 2, 0, -2, 0, 3, -4.3);
 	drawTriangle(-4, 0, -6, -2, 0, -2, 0, 3, -4.3);
 	drawTriangle(-4, 0, -6,	0, -3, -7, 0, 3, -4.3);
@@ -60,7 +26,7 @@ void SampleModel::drawUpperBody() {
 }
 
 // Draw the head of the robot
-void SampleModel::drawHead() {
+void Model::drawHead() {
 	drawSphere(0.3);
 	drawTriangle(0, 0, -2.6, 0.8, 0, 0, 0, 3.5, 0);
 	drawTriangle(0, 0, -2.6, 0, 3.5, 0, -0.8, 0, 0);
@@ -76,7 +42,7 @@ void SampleModel::drawHead() {
 }
 
 // Draw the horn of the robot
-void SampleModel::drawHorn() {
+void Model::drawHorn() {
 	drawTriangle(-0.25, -1.5, -0.75, 0.25, -1.5, -0.75, 0, -1.5, -3);
 	drawTriangle(-0.25, -1.5, -0.75, -1.4, -1.4, -1.5, 0, -1.5, -1.5);
 	drawTriangle(0.25, -1.5, -0.75, 1.4, -1.4, -1.5, 0, -1.5, -1.5);
@@ -85,7 +51,7 @@ void SampleModel::drawHorn() {
 }
 
 // Draw the left arm of the robot
-void SampleModel::drawLeftUpperArm() {
+void Model::drawLeftUpperArm() {
 	drawTriangle(-0.15, 0, -1.5, 0.2, 0.25, 0.5, 0.6, 0, 0.5);
 	drawTriangle(-0.15, 0, -1.5, 0.2, -0.25, 0.5, 0.6, 0, 0.5);
 	drawTriangle(0.4, 0, 1.25, 0.2, -0.25, 0.5, 0.6, 0, 0.5);
@@ -127,7 +93,7 @@ void SampleModel::drawLeftUpperArm() {
 	drawTriangle(0, -1.5, 0.6, 2, 0, 0.2, 0.4, -1.2, 1);
 }
 
-void SampleModel::drawLeftLowerArm() {
+void Model::drawLeftLowerArm() {
 	drawTriangle(0.2, 0, -0.2, 0.8, 0, 1, 0, 0.6, 0.65);
 	drawTriangle(0.2, 0, -0.2, 0.8, 0, 1, 0, -0.6, 0.65);
 	drawTriangle(0.2, 0, -0.2, -0.3, 0, 0.5, 0, 0.6, 0.65);
@@ -138,7 +104,7 @@ void SampleModel::drawLeftLowerArm() {
 	drawTriangle(-0.5, 0, 3.25, -0.3, 0, 0.5, 0, -0.6, 0.65);
 }
 
-void SampleModel::drawRightUpperArm() {
+void Model::drawRightUpperArm() {
 	drawTriangle(0.15, 0, -1.5, -0.2, 0.25, 0.5, -0.6, 0, 0.5);
 	drawTriangle(0.15, 0, -1.5, -0.2, -0.25, 0.5, -0.6, 0, 0.5);
 	drawTriangle(-0.4, 0, 1.25, -0.2, -0.25, 0.5, -0.6, 0, 0.5);
@@ -180,7 +146,7 @@ void SampleModel::drawRightUpperArm() {
 	drawTriangle(-0, -1.5, 0.6, -2, 0, 0.2, -0.4, -1.2, 1);
 }
 
-void SampleModel::drawRightLowerArm() {
+void Model::drawRightLowerArm() {
 	drawTriangle(-0.2, 0, -0.2, -0.8, 0, 1, -0, 0.6, 0.65);
 	drawTriangle(-0.2, 0, -0.2, -0.8, 0, 1, -0, -0.6, 0.65);
 	drawTriangle(-0.2, 0, -0.2, +0.3, 0, 0.5, -0, 0.6, 0.65);
@@ -191,7 +157,7 @@ void SampleModel::drawRightLowerArm() {
 	drawTriangle(+0.5, 0, 3.25, +0.3, 0, 0.5, -0, -0.6, 0.65);
 }
 
-void SampleModel::drawLowerBody() {
+void Model::drawLowerBody() {
 	glRotated(90, 1.0, 0.0, 0.0);
 	glTranslated(0.0, 0.0, -3.5f);
 	drawCylinder(3.25, 1.05, 0.85);
@@ -201,7 +167,7 @@ void SampleModel::drawLowerBody() {
 	drawBox(1, 1, 1);
 }
 
-void SampleModel::drawRightUpperLeg() {
+void Model::drawRightUpperLeg() {
 	drawTriangle(0.56, 0, 0.75, 0.8, 0, 1.6, 0.57, 1.5, 1.3);
 	drawTriangle(0.56, 0, 2.5, 0.8, 0, 1.6, 0.57, 1.5, 1.3);
 	drawTriangle(0.56, 0, 0.75, 0.8, 0, 1.6, 0.52, -1.5, 1.2);
@@ -226,7 +192,7 @@ void SampleModel::drawRightUpperLeg() {
 	drawTriangle(0.5, 1.4, 4.3, 1.5, 1, 4, 0.9, -0.3, 3);
 }
 
-void SampleModel::drawRightLowerLeg() {
+void Model::drawRightLowerLeg() {
 	drawTriangle(0, 1, -0.5, -0.5, 0.1, 0.2, 0, -1, 3.75);
 	drawTriangle(0, 1, -0.5, 0.5, 0.1, 0.2, 0, -1, 3.75);
 	drawTriangle(0, -1, 0.8, -0.5, 0.1, 0.2, 0, -1, 3.75);
@@ -235,14 +201,14 @@ void SampleModel::drawRightLowerLeg() {
 	drawTriangle(0, 1, -0.5, 0.5, 0.1, 0.2, 0, -1, 0.8);
 }
 
-void SampleModel::drawRightFoot() {
+void Model::drawRightFoot() {
 	drawTriangle(-0.5, 0, 0, 0, 0, -0.75, 0, 3, 0);
 	drawTriangle(0.5, 0, 0, 0, 0, -0.75, 0, 3, 0);
 	drawTriangle(0.5, 0, 0, 0, -0.5, 0, 0, 0, -0.75);
 	drawTriangle(-0.5, 0, 0, 0, -0.5, 0, 0, 0, -0.75);
 }
 
-void SampleModel::drawLeftUpperLeg() {
+void Model::drawLeftUpperLeg() {
 	drawTriangle(-0.56, 0, 0.75, -0.8, 0, 1.6, -0.57, 1.5, 1.3);
 	drawTriangle(-0.56, 0, 2.5, -0.8, 0, 1.6, -0.57, 1.5, 1.3);
 	drawTriangle(-0.56, 0, 0.75, -0.8, 0, 1.6, -0.52, -1.5, 1.2);
@@ -267,7 +233,7 @@ void SampleModel::drawLeftUpperLeg() {
 	drawTriangle(-0.5, 1.4, 4.3, -1.5, 1, 4, -0.9, -0.3, 3);
 }
 
-void SampleModel::drawLeftLowerLeg() {
+void Model::drawLeftLowerLeg() {
 	drawTriangle(0, 1, -0.5, -0.5, 0.1, 0.2, 0, -1, 3.75);
 	drawTriangle(0, 1, -0.5, 0.5, 0.1, 0.2, 0, -1, 3.75);
 	drawTriangle(0, -1, 0.8, -0.5, 0.1, 0.2, 0, -1, 3.75);
@@ -276,17 +242,29 @@ void SampleModel::drawLeftLowerLeg() {
 	drawTriangle(0, 1, -0.5, 0.5, 0.1, 0.2, 0, -1, 0.8);
 }
 
-void SampleModel::drawLeftFoot() {
+void Model::drawLeftFoot() {
 	drawTriangle(-0.5, 0, 0, 0, 0, -0.75, 0, 3, 0);
 	drawTriangle(0.5, 0, 0, 0, 0, -0.75, 0, 3, 0);
 	drawTriangle(0.5, 0, 0, 0, -0.5, 0, 0, 0, -0.75);
 	drawTriangle(-0.5, 0, 0, 0, -0.5, 0, 0, 0, -0.75);
 }
 
+void Model::rotate(const double &x, const double &y, const double &z) {
+	glRotated(x, 1.0, 0.0, 0.0);
+	glRotated(y, 0.0, 1.0, 0.0);
+	glRotated(z, 0.0, 0.0, 1.0);
+}
+
+void Model::back_rotate(const double &x, const double &y, const double &z) {
+	glRotated(z, 0.0, 0.0, 1.0);
+	glRotated(y, 0.0, 1.0, 0.0);
+	glRotated(x, 1.0, 0.0, 0.0);
+}
+
 
 // We are going to override (is that the right word?) the draw()
 // method of ModelerView to draw out SampleModel
-void SampleModel::draw()
+void Model::draw()
 {
     // This call takes care of a lot of the nasty projection 
     // matrix stuff.  Unless you want to fudge directly with the 
@@ -318,45 +296,35 @@ void SampleModel::draw()
 		/***this 0 can be changed as "upper body rotation"***/
 		glRotated(VAL(WHOLE_UPPER_BODY_ROTATE), 0.0, 0.0, 1.0);
 		
-		SampleModel::drawUpperBody();
+		Model::drawUpperBody();
 
 		//draw the head
 		glTranslated(0, 0, -6);
-		/***can add XYZ head rotation as "head rotation"***/
-		glRotated(VAL(HEAD_X_ROTATE), 1.0, 0.0, 0.0);
-		glRotated(VAL(HEAD_Y_ROTATE), 0.0, 1.0, 0.0);
-		glRotated(VAL(HEAD_Z_ROTATE), 0.0, 0.0, 1.0);
+		this->rotate(VAL(HEAD_X_ROTATE), VAL(HEAD_Y_ROTATE), VAL(HEAD_Z_ROTATE));
 
-		SampleModel::drawHead();
-		SampleModel::drawHorn();
+		Model::drawHead();
+		Model::drawHorn();
 
 		//translate back
-		glRotated(-VAL(HEAD_Z_ROTATE), 0.0, 0.0, 1.0);
-		glRotated(-VAL(HEAD_Y_ROTATE), 0.0, 1.0, 0.0);
-		glRotated(-VAL(HEAD_X_ROTATE), 1.0, 0.0, 0.0);
+		this->back_rotate(-VAL(HEAD_X_ROTATE), -VAL(HEAD_Y_ROTATE), -VAL(HEAD_Z_ROTATE));
 		glRotated(0, 0.0, 0.0, 1.0);
 		glTranslated(0, 0, 6.5);
 
 		//draw the left arm
 		glTranslated(3.8, 0.0, -6.5);
 		/*** here can add XYZ " left showder rotation"***/
-
-		glRotated(VAL(LEFT_SHOULDER_X_ROTATE), 1.0, 0.0, 0.0);
-		glRotated(VAL(LEFT_SHOULDER_Y_ROTATE), 0.0, 1.0, 0.0);
-		glRotated(VAL(LEFT_SHOULDER_Z_ROTATE), 0.0, 0.0, 1.0);
+		this->rotate(VAL(LEFT_SHOULDER_X_ROTATE), VAL(LEFT_SHOULDER_Y_ROTATE), VAL(LEFT_SHOULDER_Z_ROTATE));
 
 		//for picking
 		glRotated(VAL(PICKING), 0.0, 0.0, 1.0);
 
-		SampleModel::drawLeftUpperArm();
+		Model::drawLeftUpperArm();
 
 		// albow
 		glTranslated(0.8, 0.0, 4);
 		/*** here can add XYZ "left albow rotation"***/
-		glRotated(VAL(LEFT_ALBOW_X_ROTATE), 1.0, 0.0, 0.0);
-		glRotated(VAL(LEFT_ALBOW_Y_ROTATE), 0.0, 1.0, 0.0);
-		glRotated(VAL(LEFT_ALBOW_Z_ROTATE), 0.0, 0.0, 1.0);
-
+		this->rotate(VAL(LEFT_ELBOW_X_ROTATE), VAL(LEFT_ELBOW_Y_ROTATE), VAL(LEFT_ELBOW_Z_ROTATE));
+		
 		//for picking
 		glRotated(VAL(PICKING), 0.0, 1.0, 0.0);
 
@@ -366,14 +334,12 @@ void SampleModel::draw()
 		setDiffuseColor(COLOR_GREEN);
 
 		// left fore arm
-		SampleModel::drawLeftLowerArm();
+		Model::drawLeftLowerArm();
 
 		//left wrist
 		glTranslated(-0.5, 0.0, 3.25);
 		/*** here can add XYZ "left wrist rotation"***/
-		glRotated(VAL(LEFT_WRIST_X_ROTATE), 1.0, 0.0, 0.0);
-		glRotated(VAL(LEFT_WRIST_Y_ROTATE), 0.0, 1.0, 0.0);
-		glRotated(VAL(LEFT_WRIST_Z_ROTATE), 0.0, 0.0, 1.0);
+		this->rotate(VAL(LEFT_WRIST_X_ROTATE), VAL(LEFT_WRIST_Y_ROTATE), VAL(LEFT_WRIST_Z_ROTATE));
 
 		//for picking
 		glRotated(VAL(PICKING), 0.0, 1.0, 0.0);
@@ -412,41 +378,31 @@ void SampleModel::draw()
 
 		/*** here can add XYZ "left wrist rotation"***/
 		glRotated(-VAL(PICKING), 0.0, 1.0, 0.0);
-		glRotated(-VAL(LEFT_WRIST_Z_ROTATE), 0.0, 0.0, 1.0);
-		glRotated(-VAL(LEFT_WRIST_Y_ROTATE), 0.0, 1.0, 0.0);
-		glRotated(-VAL(LEFT_WRIST_X_ROTATE), 1.0, 0.0, 0.0);
+		this->back_rotate(-VAL(LEFT_WRIST_X_ROTATE), -VAL(LEFT_WRIST_Y_ROTATE), -VAL(LEFT_WRIST_Z_ROTATE));
 		glTranslated(0.5, 0.0, -3.25);
 		/*** here can add XYZ "left albow rotation"***/
 		glRotated(-VAL(PICKING), 0.0, 1.0, 0.0);
-		glRotated(-VAL(LEFT_ALBOW_Z_ROTATE), 0.0, 0.0, 1.0);
-		glRotated(-VAL(LEFT_ALBOW_Y_ROTATE), 0.0, 1.0, 0.0);
-		glRotated(-VAL(LEFT_ALBOW_X_ROTATE), 1.0, 0.0, 0.0);
+		this->back_rotate(-VAL(LEFT_ELBOW_X_ROTATE), -VAL(LEFT_ELBOW_Y_ROTATE), -VAL(LEFT_ELBOW_Z_ROTATE));
 		glTranslated(-0.8, 0.0, -4);
 		/***translate back the left shoulder rotation***/
 		glRotated(-VAL(PICKING), 0.0, 0.0, 1.0);
-		glRotated(-VAL(LEFT_SHOULDER_Z_ROTATE), 0.0, 0.0, 1.0);
-		glRotated(-VAL(LEFT_SHOULDER_Y_ROTATE), 0.0, 1.0, 0.0);
-		glRotated(-VAL(LEFT_SHOULDER_X_ROTATE), 1.0, 0.0, 0.0);
+		this->back_rotate(-VAL(LEFT_SHOULDER_X_ROTATE), -VAL(LEFT_SHOULDER_Y_ROTATE), -VAL(LEFT_SHOULDER_Z_ROTATE));
 		glTranslated(-3.8, 0.0, 6.5);
 
 		//draw the right arm
 		glTranslated(-3.8, 0.0, -6.5);
 		/*** here can add XYZ " right showder rotation"***/
-		glRotated(-VAL(RIGHT_SHOULDER_X_ROTATE), 1.0, 0.0, 0.0);
-		glRotated(-VAL(RIGHT_SHOULDER_Y_ROTATE), 0.0, 1.0, 0.0);
-		glRotated(-VAL(RIGHT_SHOULDER_Z_ROTATE), 0.0, 0.0, 1.0);
+		this->rotate(-VAL(RIGHT_SHOULDER_X_ROTATE), -VAL(RIGHT_SHOULDER_Y_ROTATE), -VAL(RIGHT_SHOULDER_Z_ROTATE));
 
 		//for picking
 		glRotated(-VAL(PICKING), 0.0, 0.0, 1.0);
 
-		SampleModel::drawRightUpperArm();
+		Model::drawRightUpperArm();
 
 		// albow
 		glTranslated(-0.8, 0.0, 4);
 		/*** here can add XYZ "right albow rotation"***/
-		glRotated(-VAL(RIGHT_ALBOW_X_ROTATE), 1.0, 0.0, 0.0);
-		glRotated(-VAL(RIGHT_ALBOW_Y_ROTATE), 0.0, 1.0, 0.0);
-		glRotated(-VAL(RIGHT_ALBOW_Z_ROTATE), 0.0, 0.0, 1.0);
+		this->rotate(-VAL(RIGHT_ELBOW_X_ROTATE), -VAL(RIGHT_ELBOW_Y_ROTATE), -VAL(RIGHT_ELBOW_Z_ROTATE));
 
 		//for picking
 		glRotated(-VAL(PICKING), 0.0, 1.0, 0.0);
@@ -457,14 +413,12 @@ void SampleModel::draw()
 		setDiffuseColor(COLOR_GREEN);
 
 		//right fore arm
-		SampleModel::drawRightLowerArm();
+		Model::drawRightLowerArm();
 
 		//right wrist
 		glTranslated(0.5, 0.0, 3.25);
 		/*** here can add XYZ "left wrist rotation"***/
-		glRotated(-VAL(RIGHT_WRIST_X_ROTATE), 1.0, 0.0, 0.0);
-		glRotated(-VAL(RIGHT_WRIST_Y_ROTATE), 0.0, 1.0, 0.0);
-		glRotated(-VAL(RIGHT_WRIST_Z_ROTATE), 0.0, 0.0, 1.0);
+		this->rotate(-VAL(RIGHT_WRIST_X_ROTATE), -VAL(RIGHT_WRIST_Y_ROTATE), -VAL(RIGHT_WRIST_Z_ROTATE));
 
 		//for picking
 		glRotated(-VAL(PICKING), 0.0, 1.0, 0.0);
@@ -493,7 +447,7 @@ void SampleModel::draw()
 
 		//draw the down body 
 		glPushMatrix();
-		SampleModel::drawLowerBody();
+		Model::drawLowerBody();
 		glPopMatrix();
 
 		// draw the right leg
@@ -503,10 +457,8 @@ void SampleModel::draw()
 		glRotated(20, 0.0, 1.0, 0.0);
 		glRotated(25, 1.0, 0.0, 0.0);
 		/***here can add X Y Z rotation and counted as " right leg roation"***/
-		glRotated(VAL(RIGHT_LEG_X_ROTATE), 1.0, 0.0, 0.0);
-		glRotated(VAL(RIGHT_LEG_Y_ROTATE), 0.0, 1.0, 0.0);
-		glRotated(VAL(RIGHT_LEG_Z_ROTATE), 0.0, 0.0, 1.0);
-		SampleModel::drawRightUpperLeg();
+		this->rotate(VAL(RIGHT_LEG_X_ROTATE), VAL(RIGHT_LEG_Y_ROTATE), VAL(RIGHT_LEG_Z_ROTATE));
+		Model::drawRightUpperLeg();
 
 		// knee 
 		//go to the place it rotate
@@ -519,10 +471,8 @@ void SampleModel::draw()
 		glRotated(-20, 0.0, 1.0, 0.0);
 		glRotated(-25, 1.0, 0.0, 0.0);
 		/***here can add X Y Z rotation and counted as "right ankle roation"***/
-		glRotated(VAL(RIGHT_CALF_X_ROTATE), 1.0, 0.0, 0.0);
-		glRotated(VAL(RIGHT_CALF_Y_ROTATE), 0.0, 1.0, 0.0);
-		glRotated(VAL(RIGHT_CALF_Z_ROTATE), 0.0, 0.0, 1.0);
-		SampleModel::drawRightLowerLeg();
+		this->rotate(VAL(RIGHT_CALF_X_ROTATE), VAL(RIGHT_CALF_Y_ROTATE), VAL(RIGHT_CALF_Z_ROTATE));
+		Model::drawRightLowerLeg();
 
 		//ankle
 		glRotated(-2, 1.0, 0.0, 0.0);
@@ -534,10 +484,8 @@ void SampleModel::draw()
 		glTranslated(0, 0, 0.75);
 		setDiffuseColor(COLOR_GREEN);
 		/***here can add X Y Z rotation and counted as "right ankle roation"***/
-		glRotated(VAL(RIGHT_FOOT_X_ROTATE), 1.0, 0.0, 0.0);
-		glRotated(VAL(RIGHT_FOOT_Y_ROTATE), 0.0, 1.0, 0.0);
-		glRotated(VAL(RIGHT_FOOT_Z_ROTATE), 0.0, 0.0, 1.0);
-		SampleModel::drawRightFoot();
+		this->rotate(VAL(RIGHT_FOOT_X_ROTATE), VAL(RIGHT_FOOT_Y_ROTATE), VAL(RIGHT_FOOT_Z_ROTATE));
+		Model::drawRightFoot();
 
 		glPopMatrix();
 
@@ -548,10 +496,8 @@ void SampleModel::draw()
 		glRotated(-20, 0.0, 1.0, 0.0);
 		glRotated(25, 1.0, 0.0, 0.0);
 		/***here can add X Y Z rotation and counted as " left leg roation"***/
-		glRotated(VAL(LEFT_LEG_X_ROTATE), 1.0, 0.0, 0.0);
-		glRotated(VAL(LEFT_LEG_Y_ROTATE), 0.0, 1.0, 0.0);
-		glRotated(VAL(LEFT_LEG_Z_ROTATE), 0.0, 0.0, 1.0);
-		SampleModel::drawLeftUpperLeg();
+		this->rotate(VAL(LEFT_LEG_X_ROTATE), VAL(LEFT_LEG_Y_ROTATE), VAL(LEFT_LEG_Z_ROTATE));
+		Model::drawLeftUpperLeg();
 
 		// knee 
 		//go to the place it rotate
@@ -564,10 +510,8 @@ void SampleModel::draw()
 		glRotated(20, 0.0, 1.0, 0.0);
 		glRotated(-25, 1.0, 0.0, 0.0);
 		/***here can add X Y Z rotation and counted as "right ankle roation"***/
-		glRotated(VAL(LEFT_CALF_X_ROTATE), 1.0, 0.0, 0.0);
-		glRotated(VAL(LEFT_CALF_Y_ROTATE), 0.0, 1.0, 0.0);
-		glRotated(VAL(LEFT_CALF_Z_ROTATE), 0.0, 0.0, 1.0);
-		SampleModel::drawLeftLowerLeg();
+		this->rotate(VAL(LEFT_CALF_X_ROTATE), VAL(LEFT_CALF_Y_ROTATE), VAL(LEFT_CALF_Z_ROTATE));
+		Model::drawLeftLowerLeg();
 
 		glRotated(-2, 1.0, 0.0, 0.0);
 		glTranslated(0, -0.9, 3.65);
@@ -578,74 +522,10 @@ void SampleModel::draw()
 		glTranslated(0, 0, 0.75);
 		setDiffuseColor(COLOR_GREEN);
 		/***here can add X Y Z rotation and counted as "right ankle roation"***/
-		glRotated(VAL(LEFT_FOOT_X_ROTATE), 1.0, 0.0, 0.0);
-		glRotated(VAL(LEFT_FOOT_Y_ROTATE), 0.0, 1.0, 0.0);
-		glRotated(VAL(LEFT_FOOT_Z_ROTATE), 0.0, 0.0, 1.0);
-		SampleModel::drawLeftFoot();
+		this->rotate(VAL(LEFT_FOOT_X_ROTATE), VAL(LEFT_FOOT_Y_ROTATE), VAL(LEFT_FOOT_Z_ROTATE));
+		Model::drawLeftFoot();
 
 		glPopMatrix();
 
 	glPopMatrix();
-}
-
-int main()
-{
-	// Initialize the controls
-	// Constructor is ModelerControl(name, minimumvalue, maximumvalue, 
-	// stepsize, defaultvalue)
-    ModelerControl controls[NUMCONTROLS];
-    controls[XPOS] = ModelerControl("X Position", -5, 5, 0.1f, 0);
-    controls[YPOS] = ModelerControl("Y Position", 0, 5, 0.1f, 0);
-    controls[ZPOS] = ModelerControl("Z Position", -5, 5, 0.1f, 0);
-	controls[HEIGHT] = ModelerControl("Height", -0.4, 0.4, 0.01f, 0);
-	controls[WHOLE_UPPER_BODY_ROTATE] = ModelerControl("Whole Upper Body Rotate", -180, 180, 1, 0);
-	controls[HEAD_X_ROTATE] = ModelerControl("Head X Rotate", -70, 30, 1, 0);
-	controls[HEAD_Y_ROTATE] = ModelerControl("Head Y Rotate", -60, 60, 1, 0);
-	controls[HEAD_Z_ROTATE] = ModelerControl("Head Z Rotate", -80, 80, 1, 0);
-	controls[LEFT_SHOULDER_X_ROTATE] = ModelerControl("Left Shoulder X Rotate", -180, 180, 1, 8);
-	controls[LEFT_SHOULDER_Y_ROTATE] = ModelerControl("Left Shoulder Y Rotate", -30, 180, 1, 0);
-	controls[LEFT_SHOULDER_Z_ROTATE] = ModelerControl("Left Shoulder Z Rotate", -100, 100, 1, 0);
-	controls[LEFT_ALBOW_X_ROTATE] = ModelerControl("Left Albow X Rotate", -135, 110, 1, -10);
-	controls[LEFT_ALBOW_Y_ROTATE] = ModelerControl("Left Albow Y Rotate", -135, 120, 1, 0);
-	controls[LEFT_ALBOW_Z_ROTATE] = ModelerControl("Left Albow Z Rotate", -130, 130, 1, 0);
-	controls[LEFT_WRIST_X_ROTATE] = ModelerControl("Left Wrist X Rotate", -135, 110, 1, -5);
-	controls[LEFT_WRIST_Y_ROTATE] = ModelerControl("Left Wrist Y Rotate", -135, 120, 1, 0);
-	controls[LEFT_WRIST_Z_ROTATE] = ModelerControl("Left Wrist Z Rotate", -130, 130, 1, 0);
-	controls[RIGHT_SHOULDER_X_ROTATE] = ModelerControl("Right Shoulder X Rotate", -180, 180, 1, -8);
-	controls[RIGHT_SHOULDER_Y_ROTATE] = ModelerControl("Right Shoulder Y Rotate", -30, 180, 1, 0);
-	controls[RIGHT_SHOULDER_Z_ROTATE] = ModelerControl("Right Shoulder Z Rotate", -100, 100, 1, 0);
-	controls[RIGHT_ALBOW_X_ROTATE] = ModelerControl("Right Albow X Rotate", -135, 110, 1, 10);
-	controls[RIGHT_ALBOW_Y_ROTATE] = ModelerControl("Right Albow Y Rotate", -135, 120, 1, 0);
-	controls[RIGHT_ALBOW_Z_ROTATE] = ModelerControl("Right Albow Z Rotate", -130, 130, 1, 0);
-	controls[RIGHT_WRIST_X_ROTATE] = ModelerControl("Right Wrist X Rotate", -135, 110, 1, 5);
-	controls[RIGHT_WRIST_Y_ROTATE] = ModelerControl("Right Wrist Y Rotate", -135, 120, 1, 0);
-	controls[RIGHT_WRIST_Z_ROTATE] = ModelerControl("Right Wrist Z Rotate", -130, 130, 1, 0);
-	controls[PICKING] = ModelerControl("Picking", 0, -100, 1, 0);
-
-	controls[RIGHT_LEG_X_ROTATE] = ModelerControl("Right Leg X Rotate", -100, 60, 1, 0);
-	controls[RIGHT_LEG_Y_ROTATE] = ModelerControl("Right Leg Y Rotate", -10, 40, 1, 0);
-	controls[RIGHT_LEG_Z_ROTATE] = ModelerControl("Right Leg Z Rotate", -20, 20, 1, 0);
-
-	controls[LEFT_LEG_X_ROTATE] = ModelerControl("Left Leg X Rotate", -100, 60, 1, 0);
-	controls[LEFT_LEG_Y_ROTATE] = ModelerControl("Left Leg Y Rotate", -40, 10, 1, 0);
-	controls[LEFT_LEG_Z_ROTATE] = ModelerControl("Left Leg Z Rotate", -20, 20, 1, 0);
-
-	controls[RIGHT_CALF_X_ROTATE] = ModelerControl("Right Calf X Rotate", -20, 40, 1, 2);
-	controls[RIGHT_CALF_Y_ROTATE] = ModelerControl("Right Calf Y Rotate", -10, 10, 1, 0);
-	controls[RIGHT_CALF_Z_ROTATE] = ModelerControl("Right Calf Z Rotate", -20, 20, 1, 0);
-
-	controls[LEFT_CALF_X_ROTATE] = ModelerControl("Left Calf X Rotate", -20, 40, 1, 2);
-	controls[LEFT_CALF_Y_ROTATE] = ModelerControl("Left Calf Y Rotate", -10, 10, 1, 0);
-	controls[LEFT_CALF_Z_ROTATE] = ModelerControl("Left Calf Z Rotate", -20, 20, 1, 0);
-
-	controls[RIGHT_FOOT_X_ROTATE] = ModelerControl("Right Foot X Rotate", -5, 10, 1, 0);
-	controls[RIGHT_FOOT_Y_ROTATE] = ModelerControl("Right Foot Y Rotate", -20, 20, 1, 0);
-	controls[RIGHT_FOOT_Z_ROTATE] = ModelerControl("Right Foot Z Rotate", -20, 20, 1, -18);
-
-	controls[LEFT_FOOT_X_ROTATE] = ModelerControl("Left Foot X Rotate", -5, 10, 1, 0);
-	controls[LEFT_FOOT_Y_ROTATE] = ModelerControl("Left Foot Y Rotate", -20, 20, 1, 0);
-	controls[LEFT_FOOT_Z_ROTATE] = ModelerControl("Left Foot Z Rotate", -20, 20, 1, 18);
-
-    ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS); // Use the controls array to create the appropriate sliders.
-    return ModelerApplication::Instance()->Run();	// Run the application.
 }

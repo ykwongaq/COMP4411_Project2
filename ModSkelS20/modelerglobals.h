@@ -10,22 +10,39 @@
 // of the controls from the user interface.
 enum SampleModelControls
 { 
-	XPOS, YPOS, ZPOS, HEIGHT, 
+	// Whole body controls
+	XPOS, YPOS, ZPOS, HEIGHT,
+	// Head controls
 	HEAD_X_ROTATE,HEAD_Y_ROTATE,HEAD_Z_ROTATE,
+	// ------------------------------------- Upper Body Controls -------------------------------------
+	// Left shoulder controls
 	LEFT_SHOULDER_X_ROTATE, LEFT_SHOULDER_Y_ROTATE, LEFT_SHOULDER_Z_ROTATE,
-	LEFT_ALBOW_X_ROTATE, LEFT_ALBOW_Y_ROTATE, LEFT_ALBOW_Z_ROTATE,
+	// Left elbow controls
+	LEFT_ELBOW_X_ROTATE, LEFT_ELBOW_Y_ROTATE, LEFT_ELBOW_Z_ROTATE,
+	// Left wrist controls
 	LEFT_WRIST_X_ROTATE, LEFT_WRIST_Y_ROTATE, LEFT_WRIST_Z_ROTATE,
+	// Right shoulder controls
 	RIGHT_SHOULDER_X_ROTATE, RIGHT_SHOULDER_Y_ROTATE, RIGHT_SHOULDER_Z_ROTATE,
-	RIGHT_ALBOW_X_ROTATE, RIGHT_ALBOW_Y_ROTATE, RIGHT_ALBOW_Z_ROTATE,
+	// Right elbow controls
+	RIGHT_ELBOW_X_ROTATE, RIGHT_ELBOW_Y_ROTATE, RIGHT_ELBOW_Z_ROTATE,
+	// Right wrist controls
 	RIGHT_WRIST_X_ROTATE, RIGHT_WRIST_Y_ROTATE, RIGHT_WRIST_Z_ROTATE,
+	// Upper body controls 
 	WHOLE_UPPER_BODY_ROTATE, PICKING,
-	XPOS, YPOS, ZPOS, HEIGHT, ROTATE, 
+	// ------------------------------------- Lower Body Controls -------------------------------------
+	// Right leg controls
 	RIGHT_LEG_X_ROTATE, RIGHT_LEG_Y_ROTATE, RIGHT_LEG_Z_ROTATE,
+	// Right calf controls
 	RIGHT_CALF_X_ROTATE, RIGHT_CALF_Y_ROTATE, RIGHT_CALF_Z_ROTATE, 
+	// Right foot controls
 	RIGHT_FOOT_X_ROTATE, RIGHT_FOOT_Y_ROTATE, RIGHT_FOOT_Z_ROTATE,
+	// Left leg controls
 	LEFT_LEG_X_ROTATE, LEFT_LEG_Y_ROTATE, LEFT_LEG_Z_ROTATE,
+	// Left calf controls
 	LEFT_CALF_X_ROTATE, LEFT_CALF_Y_ROTATE, LEFT_CALF_Z_ROTATE,
+	// Left foot controls
 	LEFT_FOOT_X_ROTATE, LEFT_FOOT_Y_ROTATE, LEFT_FOOT_Z_ROTATE,
+	// Number of controls
 	NUMCONTROLS
 };
 
