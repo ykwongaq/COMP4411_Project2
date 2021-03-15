@@ -454,6 +454,9 @@ void SampleModel::draw()
 		glRotated(20, 0.0, 1.0, 0.0);
 		glRotated(25, 1.0, 0.0, 0.0);
 		/***here can add X Y Z rotation and counted as " right leg roation"***/
+		glRotated(VAL(RIGHT_LEG_X_ROTATE), 1.0, 0.0, 0.0);
+		glRotated(VAL(RIGHT_LEG_Y_ROTATE), 0.0, 1.0, 0.0);
+		glRotated(VAL(RIGHT_LEG_Z_ROTATE), 0.0, 0.0, 1.0);
 		SampleModel::drawRightUpperLeg();
 
 		// knee 
@@ -467,7 +470,9 @@ void SampleModel::draw()
 		glRotated(-20, 0.0, 1.0, 0.0);
 		glRotated(-25, 1.0, 0.0, 0.0);
 		/***here can add X Y Z rotation and counted as "right ankle roation"***/
-		glRotated(2, 1.0, 0.0, 0.0);
+		glRotated(VAL(RIGHT_CALF_X_ROTATE), 1.0, 0.0, 0.0);
+		glRotated(VAL(RIGHT_CALF_Y_ROTATE), 0.0, 1.0, 0.0);
+		glRotated(VAL(RIGHT_CALF_Z_ROTATE), 0.0, 0.0, 1.0);
 		SampleModel::drawRightLowerLeg();
 
 		//ankle
@@ -480,7 +485,9 @@ void SampleModel::draw()
 		glTranslated(0, 0, 0.75);
 		setDiffuseColor(COLOR_GREEN);
 		/***here can add X Y Z rotation and counted as "right ankle roation"***/
-		glRotated(-18, 0.0, 0.0, 1.0);
+		glRotated(VAL(RIGHT_FOOT_X_ROTATE), 1.0, 0.0, 0.0);
+		glRotated(VAL(RIGHT_FOOT_Y_ROTATE), 0.0, 1.0, 0.0);
+		glRotated(VAL(RIGHT_FOOT_Z_ROTATE), 0.0, 0.0, 1.0);
 		SampleModel::drawRightFoot();
 
 		glPopMatrix();
@@ -492,6 +499,9 @@ void SampleModel::draw()
 		glRotated(-20, 0.0, 1.0, 0.0);
 		glRotated(25, 1.0, 0.0, 0.0);
 		/***here can add X Y Z rotation and counted as " left leg roation"***/
+		glRotated(VAL(LEFT_LEG_X_ROTATE), 1.0, 0.0, 0.0);
+		glRotated(VAL(LEFT_LEG_Y_ROTATE), 0.0, 1.0, 0.0);
+		glRotated(VAL(LEFT_LEG_Z_ROTATE), 0.0, 0.0, 1.0);
 		SampleModel::drawLeftUpperLeg();
 
 		// knee 
@@ -505,7 +515,9 @@ void SampleModel::draw()
 		glRotated(20, 0.0, 1.0, 0.0);
 		glRotated(-25, 1.0, 0.0, 0.0);
 		/***here can add X Y Z rotation and counted as "right ankle roation"***/
-		glRotated(2, 1.0, 0.0, 0.0);
+		glRotated(VAL(LEFT_CALF_X_ROTATE), 1.0, 0.0, 0.0);
+		glRotated(VAL(LEFT_CALF_Y_ROTATE), 0.0, 1.0, 0.0);
+		glRotated(VAL(LEFT_CALF_Z_ROTATE), 0.0, 0.0, 1.0);
 		SampleModel::drawLeftLowerLeg();
 
 		glRotated(-2, 1.0, 0.0, 0.0);
@@ -517,7 +529,9 @@ void SampleModel::draw()
 		glTranslated(0, 0, 0.75);
 		setDiffuseColor(COLOR_GREEN);
 		/***here can add X Y Z rotation and counted as "right ankle roation"***/
-		glRotated(18, 0.0, 0.0, 1.0);
+		glRotated(VAL(LEFT_FOOT_X_ROTATE), 1.0, 0.0, 0.0);
+		glRotated(VAL(LEFT_FOOT_Y_ROTATE), 0.0, 1.0, 0.0);
+		glRotated(VAL(LEFT_FOOT_Z_ROTATE), 0.0, 0.0, 1.0);
 		SampleModel::drawLeftFoot();
 
 		glPopMatrix();
@@ -537,7 +551,30 @@ int main()
     controls[HEIGHT] = ModelerControl("Height", 1, 2.5, 0.1f, 1);
 	controls[ROTATE] = ModelerControl("Rotate", -135, 135, 1, 0);
 
-	
+	controls[RIGHT_LEG_X_ROTATE] = ModelerControl("Right Leg X Rotate", -100, 60, 1, 0);
+	controls[RIGHT_LEG_Y_ROTATE] = ModelerControl("Right Leg Y Rotate", -10, 40, 1, 0);
+	controls[RIGHT_LEG_Z_ROTATE] = ModelerControl("Right Leg Z Rotate", -20, 20, 1, 0);
+
+	controls[LEFT_LEG_X_ROTATE] = ModelerControl("Left Leg X Rotate", -100, 60, 1, 0);
+	controls[LEFT_LEG_Y_ROTATE] = ModelerControl("Left Leg Y Rotate", -40, 10, 1, 0);
+	controls[LEFT_LEG_Z_ROTATE] = ModelerControl("Left Leg Z Rotate", -20, 20, 1, 0);
+
+	controls[RIGHT_CALF_X_ROTATE] = ModelerControl("Right Calf X Rotate", -20, 40, 1, 2);
+	controls[RIGHT_CALF_Y_ROTATE] = ModelerControl("Right Calf Y Rotate", -10, 10, 1, 0);
+	controls[RIGHT_CALF_Z_ROTATE] = ModelerControl("Right Calf Z Rotate", -20, 20, 1, 0);
+
+	controls[LEFT_CALF_X_ROTATE] = ModelerControl("Left Calf X Rotate", -20, 40, 1, 2);
+	controls[LEFT_CALF_Y_ROTATE] = ModelerControl("Left Calf Y Rotate", -10, 10, 1, 0);
+	controls[LEFT_CALF_Z_ROTATE] = ModelerControl("Left Calf Z Rotate", -20, 20, 1, 0);
+
+	controls[RIGHT_FOOT_X_ROTATE] = ModelerControl("Right Foot X Rotate", -5, 10, 1, 0);
+	controls[RIGHT_FOOT_Y_ROTATE] = ModelerControl("Right Foot Y Rotate", -20, 20, 1, 0);
+	controls[RIGHT_FOOT_Z_ROTATE] = ModelerControl("Right Foot Z Rotate", -20, 20, 1, -18);
+
+	controls[LEFT_FOOT_X_ROTATE] = ModelerControl("Left Foot X Rotate", -5, 10, 1, 0);
+	controls[LEFT_FOOT_Y_ROTATE] = ModelerControl("Left Foot Y Rotate", -20, 20, 1, 0);
+	controls[LEFT_FOOT_Z_ROTATE] = ModelerControl("Left Foot Z Rotate", -20, 20, 1, 18);
+
     ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS); // Use the controls array to create the appropriate sliders.
     return ModelerApplication::Instance()->Run();	// Run the application.
 }
