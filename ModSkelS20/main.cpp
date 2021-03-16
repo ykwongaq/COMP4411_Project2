@@ -82,7 +82,7 @@ int main() {
 	controls[LIGHT_Y_POS] = ModelerControl("Light Y Position", -30, 30, 1, 2);
 	controls[LIGHT_Z_POS] = ModelerControl("Light Z Position", -30, 30, 1, -4);
 	// Light intensity control
-	controls[LIGHT_INTENSITY] = ModelerControl("Light Intensity", 0, 1, 0.01, 0.5);
+	controls[LIGHT_INTENSITY] = ModelerControl("Light Intensity", 0, 5, 0.01, 0.5);
 
 	ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS); // Use the controls array to create the appropriate sliders.
 	return ModelerApplication::Instance()->Run();	// Run the application.
