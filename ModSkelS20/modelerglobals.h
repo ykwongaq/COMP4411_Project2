@@ -49,6 +49,8 @@ enum SampleModelControls
 	LIGHT_INTENSITY,
 	// Animation
 	ANIMATION,
+	// Adjustment on body,
+	ADJUST_BODY,
 	// Number of controls
 	NUMCONTROLS
 };

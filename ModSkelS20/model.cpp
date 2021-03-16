@@ -308,6 +308,9 @@ void Model::draw()
 		app->SetControlValue(RIGHT_LEG_X_ROTATE, right_leg_rotate + Model::RIGHT_LEG_MOVEMENT);
 	}
 
+	// Determine adjust body component or not
+	bool isAdjust = VAL(ADJUST_BODY) == 1;
+
 	// draw the floor and center
 	setAmbientColor(.1f,.1f,.1f);
 	setDiffuseColor(COLOR_RED);
@@ -333,7 +336,15 @@ void Model::draw()
 		/***this 0 can be changed as "upper body rotation"***/
 		glRotated(VAL(WHOLE_UPPER_BODY_ROTATE), 0.0, 0.0, 1.0);
 		
-		Model::drawUpperBody();
+		if (isAdjust) {
+			// Draw sphere body
+			glTranslated(0.0, 0.0, -3.0);
+			drawSphere(2);
+			glTranslated(0.0, 0.0, 3.0);
+		} else {
+			// Draw triangular body
+			Model::drawUpperBody();
+		}
 
 		//draw the head
 		glTranslated(0, 0, -6);
@@ -355,7 +366,15 @@ void Model::draw()
 		//for picking
 		glRotated(VAL(PICKING), 0.0, 0.0, 1.0);
 
-		Model::drawLeftUpperArm();
+		if (isAdjust) {
+			// Draw cylinder arm
+			glTranslated(0.9, 0.0, 0.0);
+			drawCylinder(3, 0.4, 0.4);
+			glTranslated(-0.9, 0.0, 0.0);
+		} else {
+			// Draw triangular arm
+			Model::drawLeftUpperArm();
+		}
 
 		// albow
 		glTranslated(0.8, 0.0, 4);
@@ -371,7 +390,18 @@ void Model::draw()
 		setDiffuseColor(COLOR_GREEN);
 
 		// left fore arm
-		Model::drawLeftLowerArm();
+		if (isAdjust) {
+			// Draw cylinder arm
+			glTranslated(0.0, 0.0, 0.6);
+			glRotated(-9, 0.0, 1.0, 0.0);
+			drawCylinder(2, 0.3, 0.3);
+			glRotated(9, 0.0, 1.0, 0.0);
+			glTranslated(0.0, 0.0, -0.6);
+		} else {
+			// Draw triangular arm
+			Model::drawLeftLowerArm();
+		}
+		
 
 		//left wrist
 		glTranslated(-0.5, 0.0, 3.25);
@@ -434,7 +464,16 @@ void Model::draw()
 		//for picking
 		glRotated(-VAL(PICKING), 0.0, 0.0, 1.0);
 
-		Model::drawRightUpperArm();
+		if (isAdjust) {
+			// Draw cylinder arm
+			glTranslated(-0.9, 0.0, 0.0);
+			drawCylinder(3, 0.4, 0.4);
+			glTranslated(0.9, 0.0, 0.0);
+		} else {
+			// Draw triangular arm
+			Model::drawRightUpperArm();
+		}
+		
 
 		// albow
 		glTranslated(-0.8, 0.0, 4);
@@ -450,7 +489,17 @@ void Model::draw()
 		setDiffuseColor(COLOR_GREEN);
 
 		//right fore arm
-		Model::drawRightLowerArm();
+		if (isAdjust) {
+			// Draw cylinder arm
+			glTranslated(0.0, 0.0, 0.6);
+			glRotated(9, 0.0, 1.0, 0.0);
+			drawCylinder(2, 0.3, 0.3);
+			glRotated(-9, 0.0, 1.0, 0.0);
+			glTranslated(0.0, 0.0, -0.6);
+		} else {
+			// Draw triangular arm
+			Model::drawRightLowerArm();
+		}
 
 		//right wrist
 		glTranslated(0.5, 0.0, 3.25);
@@ -484,7 +533,8 @@ void Model::draw()
 
 		//draw the down body 
 		glPushMatrix();
-		Model::drawLowerBody();
+		if (!isAdjust)
+			Model::drawLowerBody();
 		glPopMatrix();
 
 		// draw the right leg
@@ -495,21 +545,45 @@ void Model::draw()
 		glRotated(25, 1.0, 0.0, 0.0);
 		/***here can add X Y Z rotation and counted as " right leg roation"***/
 		this->rotate(VAL(RIGHT_LEG_X_ROTATE), VAL(RIGHT_LEG_Y_ROTATE), VAL(RIGHT_LEG_Z_ROTATE));
-		Model::drawRightUpperLeg();
+
+		if (isAdjust) {
+			// Draw cylinder leg
+			glRotated(-20, 0.0, 1.0, 0.0);
+			glRotated(-25, 1.0, 0.0, 0.0);
+			glTranslated(1.9, -0.5, 0.0);
+			drawCylinder(2.5, 0.4, 0.4);
+			glTranslated(-1.9, 0.5, -0.0);
+			glRotated(20, 0.0, 1.0, 0.0);
+			glRotated(25, 1.0, 0.0, 0.0);
+		} else {
+			// Draw triangular leg
+			Model::drawRightUpperLeg();
+		}
+		
 
 		// knee 
 		//go to the place it rotate
 		// the knee's center
 		glTranslated(0.5, 1.3, 4.4);
 		setDiffuseColor(COLOR_RED);
-
 		drawSphere(0.3f);
 		setDiffuseColor(COLOR_GREEN);
 		glRotated(-20, 0.0, 1.0, 0.0);
 		glRotated(-25, 1.0, 0.0, 0.0);
 		/***here can add X Y Z rotation and counted as "right ankle roation"***/
 		this->rotate(VAL(RIGHT_CALF_X_ROTATE), VAL(RIGHT_CALF_Y_ROTATE), VAL(RIGHT_CALF_Z_ROTATE));
-		Model::drawRightLowerLeg();
+		if (isAdjust) {
+			// Draw cylinder leg
+			glRotated(13, 1.0, 0.0, 0.0);
+			glTranslated(0.0, 0.0, 1.0);
+			drawCylinder(2, 0.3, 0.3);
+			glTranslated(0.0, 0.0, -1.0);
+			glRotated(-13, 1.0, 0.0, 0.0);
+		} else {
+			// Draw triangular leg
+			Model::drawRightLowerLeg();
+		}
+		
 
 		//ankle
 		glRotated(-2, 1.0, 0.0, 0.0);
@@ -534,7 +608,19 @@ void Model::draw()
 		glRotated(25, 1.0, 0.0, 0.0);
 		/***here can add X Y Z rotation and counted as " left leg roation"***/
 		this->rotate(VAL(LEFT_LEG_X_ROTATE), VAL(LEFT_LEG_Y_ROTATE), VAL(LEFT_LEG_Z_ROTATE));
-		Model::drawLeftUpperLeg();
+		if (isAdjust) {
+			// Draw cylinder leg
+			glRotated(20, 0.0, 1.0, 0.0);
+			glRotated(-25, 1.0, 0.0, 0.0);
+			glTranslated(-1.9, -0.5, 0.0);
+			drawCylinder(2.5, 0.4, 0.4);
+			glTranslated(1.9, 0.5, -0.0);
+			glRotated(-20, 0.0, 1.0, 0.0);
+			glRotated(25, 1.0, 0.0, 0.0);
+		} else {
+			// Draw triangular leg
+			Model::drawLeftUpperLeg();
+		}
 
 		// knee 
 		//go to the place it rotate
@@ -548,7 +634,18 @@ void Model::draw()
 		glRotated(-25, 1.0, 0.0, 0.0);
 		/***here can add X Y Z rotation and counted as "right ankle roation"***/
 		this->rotate(VAL(LEFT_CALF_X_ROTATE), VAL(LEFT_CALF_Y_ROTATE), VAL(LEFT_CALF_Z_ROTATE));
-		Model::drawLeftLowerLeg();
+		if (isAdjust) {
+			// Draw cylinder leg
+			glRotated(13, 1.0, 0.0, 0.0);
+			glTranslated(0.0, 0.0, 1.0);
+			drawCylinder(2, 0.3, 0.3);
+			glTranslated(0.0, 0.0, -1.0);
+			glRotated(-13, 1.0, 0.0, 0.0);
+		} else {
+			// Draw triangular leg
+			Model::drawLeftLowerLeg();
+		}
+		
 
 		glRotated(-2, 1.0, 0.0, 0.0);
 		glTranslated(0, -0.9, 3.65);

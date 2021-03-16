@@ -85,6 +85,8 @@ int main() {
 	controls[LIGHT_INTENSITY] = ModelerControl("Light Intensity", 0, 5, 0.01, 0.5);
 	// Animation
 	controls[ANIMATION] = ModelerControl("Animation", 0, 1, 1, 0);
+	// Adjustment on body
+	controls[ADJUST_BODY] = ModelerControl("Adjust Body?", 0, 1, 1, 0);
 
 	ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS); // Use the controls array to create the appropriate sliders.
 	return ModelerApplication::Instance()->Run();	// Run the application.
