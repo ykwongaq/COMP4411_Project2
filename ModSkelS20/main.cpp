@@ -76,6 +76,13 @@ int main() {
 	controls[LEFT_FOOT_X_ROTATE] = ModelerControl("Left Foot X Rotate", -5, 10, 1, 0);
 	controls[LEFT_FOOT_Y_ROTATE] = ModelerControl("Left Foot Y Rotate", -20, 20, 1, 0);
 	controls[LEFT_FOOT_Z_ROTATE] = ModelerControl("Left Foot Z Rotate", -20, 20, 1, 18);
+	// --------------------------------- Bonus Controls ---------------------------------
+	// Light position controls
+	controls[LIGHT_X_POS] = ModelerControl("Light X Position", -30, 30, 1, 4);
+	controls[LIGHT_Y_POS] = ModelerControl("Light Y Position", -30, 30, 1, 2);
+	controls[LIGHT_Z_POS] = ModelerControl("Light Z Position", -30, 30, 1, -4);
+	// Light intensity control
+	controls[LIGHT_INTENSITY] = ModelerControl("Light Intensity", 0, 1, 0.01, 0.5);
 
 	ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS); // Use the controls array to create the appropriate sliders.
 	return ModelerApplication::Instance()->Run();	// Run the application.

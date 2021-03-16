@@ -42,6 +42,11 @@ enum SampleModelControls
 	LEFT_CALF_X_ROTATE, LEFT_CALF_Y_ROTATE, LEFT_CALF_Z_ROTATE,
 	// Left foot controls
 	LEFT_FOOT_X_ROTATE, LEFT_FOOT_Y_ROTATE, LEFT_FOOT_Z_ROTATE,
+	// ------------------------------------- Bonus Controls -------------------------------------
+	// Light position controls
+	LIGHT_X_POS, LIGHT_Y_POS, LIGHT_Z_POS,
+	// Light intensity controls
+	LIGHT_INTENSITY,
 	// Number of controls
 	NUMCONTROLS
 };

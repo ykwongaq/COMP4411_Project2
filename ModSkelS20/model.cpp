@@ -265,7 +265,7 @@ void Model::back_rotate(const double &x, const double &y, const double &z) {
 // We are going to override (is that the right word?) the draw()
 // method of ModelerView to draw out SampleModel
 void Model::draw()
-{
+{	
     // This call takes care of a lot of the nasty projection 
     // matrix stuff.  Unless you want to fudge directly with the 
 	// projection matrix, don't bother with this ...
