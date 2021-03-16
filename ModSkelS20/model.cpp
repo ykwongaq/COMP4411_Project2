@@ -6,6 +6,12 @@
 #include "modelerdraw.h"
 #include "modelerglobals.h"
 #include "modelerapp.h"
+#include "modelerapp.h"
+
+int Model::LEFT_SHOULDER_MOVEMENT	= 1;
+int Model::RIGHT_SHOULDER_MOVEMENT	= 1;
+int Model::LEFT_LEG_MOVEMENT	= 1;
+int Model::RIGHT_LEG_MOVEMENT	= -1;
 
 // Draw uppper body of the robot
 void Model::drawUpperBody() {
@@ -262,6 +268,8 @@ void Model::back_rotate(const double &x, const double &y, const double &z) {
 }
 
 
+Model::Model(int x, int y, int w, int h, char *label) : ModelerView(x, y, w, h, label) {}
+
 // We are going to override (is that the right word?) the draw()
 // method of ModelerView to draw out SampleModel
 void Model::draw()
@@ -270,6 +278,35 @@ void Model::draw()
     // matrix stuff.  Unless you want to fudge directly with the 
 	// projection matrix, don't bother with this ...
     ModelerView::draw();
+
+	// Handle animation
+	if (VAL(ANIMATION) == 1) {
+		ModelerApplication *app = ModelerApplication::Instance();
+		
+		// Handle left shoulder movement
+		double left_shoulder_rotate = app->GetControlValue(LEFT_SHOULDER_X_ROTATE);
+		if (left_shoulder_rotate >= Model::LEFT_SHOULDER_X_ROTATE_MAX) Model::LEFT_SHOULDER_MOVEMENT = -1;
+		if (left_shoulder_rotate <= Model::LEFT_SHOULDER_X_ROTATE_MIN) Model::LEFT_SHOULDER_MOVEMENT = 1;
+		app->SetControlValue(LEFT_SHOULDER_X_ROTATE, left_shoulder_rotate + Model::LEFT_SHOULDER_MOVEMENT);
+
+		// Handle right shoulder movement
+		double right_shoulder_rotate = app->GetControlValue(RIGHT_SHOULDER_X_ROTATE);
+		if (right_shoulder_rotate >= Model::RIGHT_SHOULDER_X_ROTATE_MAX) Model::RIGHT_SHOULDER_MOVEMENT = -1;
+		if (right_shoulder_rotate <= Model::RIGHT_SHOULDER_X_ROTATE_MIN) Model::RIGHT_SHOULDER_MOVEMENT = 1;
+		app->SetControlValue(RIGHT_SHOULDER_X_ROTATE, right_shoulder_rotate + Model::RIGHT_SHOULDER_MOVEMENT);
+
+		// Handle left leg movement
+		double left_leg_rotate = app->GetControlValue(LEFT_LEG_X_ROTATE);
+		if (left_leg_rotate >= Model::LEFT_LEG_X_ROTATE_MAX) Model::LEFT_LEG_MOVEMENT = -1;
+		if (left_leg_rotate <= Model::LEFT_LEG_X_ROTATE_MIN) Model::LEFT_LEG_MOVEMENT = 1;
+		app->SetControlValue(LEFT_LEG_X_ROTATE, left_leg_rotate + Model::LEFT_LEG_MOVEMENT);
+
+		// Handle right leg movment
+		double right_leg_rotate = app->GetControlValue(RIGHT_LEG_X_ROTATE);
+		if (right_leg_rotate >= Model::RIGHT_LEG_X_ROTATE_MAX) Model::RIGHT_LEG_MOVEMENT = -1;
+		if (right_leg_rotate <= Model::RIGHT_LEG_X_ROTATE_MIN) Model::RIGHT_LEG_MOVEMENT = 1;
+		app->SetControlValue(RIGHT_LEG_X_ROTATE, right_leg_rotate + Model::RIGHT_LEG_MOVEMENT);
+	}
 
 	// draw the floor and center
 	setAmbientColor(.1f,.1f,.1f);

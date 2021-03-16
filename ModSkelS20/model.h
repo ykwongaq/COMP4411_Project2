@@ -7,8 +7,7 @@
 class Model : public ModelerView {
 
 public:
-	Model(int x, int y, int w, int h, char *label)
-		: ModelerView(x, y, w, h, label) {}
+	Model(int x, int y, int w, int h, char *label);
 
 	virtual void draw();
 
@@ -28,6 +27,21 @@ public:
 	void drawLeftLowerLeg();
 	void drawLeftFoot();
 
+	// Angle rotated in each flame in animation
+	static int LEFT_SHOULDER_MOVEMENT;
+	static int RIGHT_SHOULDER_MOVEMENT;
+	static int LEFT_LEG_MOVEMENT;
+	static int RIGHT_LEG_MOVEMENT;
+	
+	// Max angle of rotate of different parts of body
+	const static int LEFT_SHOULDER_X_ROTATE_MAX = 60;
+	const static int LEFT_SHOULDER_X_ROTATE_MIN = -60;
+	const static int RIGHT_SHOULDER_X_ROTATE_MAX = 60;
+	const static int RIGHT_SHOULDER_X_ROTATE_MIN = -60;
+	const static int LEFT_LEG_X_ROTATE_MAX = 60;
+	const static int LEFT_LEG_X_ROTATE_MIN = -60;
+	const static int RIGHT_LEG_X_ROTATE_MAX = 60;
+	const static int RIGHT_LEG_X_ROTATE_MIN = -60;
 private:
 	void rotate(const double &x, const double &y, const double &z);	// Rotate the body
 	void back_rotate(const double &x, const double &y, const double &z); // Back rotate the body

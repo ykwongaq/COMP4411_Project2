@@ -53,7 +53,7 @@ int main() {
 	controls[PICKING] = ModelerControl("Picking", 0, -100, 1, 0);
 	// --------------------------------- Lower Body Controls ---------------------------------
 	// Right leg controls
-	controls[RIGHT_LEG_X_ROTATE] = ModelerControl("Right Leg X Rotate", -100, 60, 1, 0);
+	controls[RIGHT_LEG_X_ROTATE] = ModelerControl("Right Leg X Rotate", -120, 60, 1, 0);
 	controls[RIGHT_LEG_Y_ROTATE] = ModelerControl("Right Leg Y Rotate", -10, 40, 1, 0);
 	controls[RIGHT_LEG_Z_ROTATE] = ModelerControl("Right Leg Z Rotate", -20, 20, 1, 0);
 	// Right calf controls
@@ -65,7 +65,7 @@ int main() {
 	controls[RIGHT_FOOT_Y_ROTATE] = ModelerControl("Right Foot Y Rotate", -20, 20, 1, 0);
 	controls[RIGHT_FOOT_Z_ROTATE] = ModelerControl("Right Foot Z Rotate", -20, 20, 1, -18);
 	// Left leg controls 
-	controls[LEFT_LEG_X_ROTATE] = ModelerControl("Left Leg X Rotate", -100, 60, 1, 0);
+	controls[LEFT_LEG_X_ROTATE] = ModelerControl("Left Leg X Rotate", -120, 60, 1, 0);
 	controls[LEFT_LEG_Y_ROTATE] = ModelerControl("Left Leg Y Rotate", -40, 10, 1, 0);
 	controls[LEFT_LEG_Z_ROTATE] = ModelerControl("Left Leg Z Rotate", -20, 20, 1, 0);
 	// Left calf controls
@@ -83,6 +83,8 @@ int main() {
 	controls[LIGHT_Z_POS] = ModelerControl("Light Z Position", -30, 30, 1, -4);
 	// Light intensity control
 	controls[LIGHT_INTENSITY] = ModelerControl("Light Intensity", 0, 5, 0.01, 0.5);
+	// Animation
+	controls[ANIMATION] = ModelerControl("Animation", 0, 1, 1, 0);
 
 	ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS); // Use the controls array to create the appropriate sliders.
 	return ModelerApplication::Instance()->Run();	// Run the application.

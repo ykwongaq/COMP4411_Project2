@@ -47,6 +47,8 @@ enum SampleModelControls
 	LIGHT_X_POS, LIGHT_Y_POS, LIGHT_Z_POS,
 	// Light intensity controls
 	LIGHT_INTENSITY,
+	// Animation
+	ANIMATION,
 	// Number of controls
 	NUMCONTROLS
 };
