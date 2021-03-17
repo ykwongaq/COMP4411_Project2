@@ -8,6 +8,7 @@
 #include "modelerapp.h"
 #include "modelerapp.h"
 #include "camera.h"
+#include "bitmap.h"
 
 int Model::LEFT_SHOULDER_MOVEMENT	= 1;
 int Model::RIGHT_SHOULDER_MOVEMENT	= 1;
@@ -269,12 +270,43 @@ void Model::back_rotate(const double &x, const double &y, const double &z) {
 }
 
 
-Model::Model(int x, int y, int w, int h, char *label) : ModelerView(x, y, w, h, label) {}
+Model::Model(int x, int y, int w, int h, char *label) : ModelerView(x, y, w, h, label) {
+	this->textureImg = nullptr;
+	this->textImgHeight = this->textImgWidth = 0;
+	this->tex = 0;
+	this->firstTime = true;
+}
 
 // We are going to override (is that the right word?) the draw()
 // method of ModelerView to draw out SampleModel
 void Model::draw()
 {	
+	// Determine adjust body component or not
+	bool isAdjust	= VAL(ADJUST_BODY) == 1;
+	bool isTexture	= VAL(TEXTURE_MAPPING) == 1;
+
+	if (firstTime) {
+		//texImg = Fl_Shared_Image::get("texImg.png", 256, 256);
+		this->textureImg = readBMP("Images/water.bmp", this->textImgWidth, this->textImgHeight);
+		if (this->textureImg == nullptr) { printf("Texture image not found.\n"); }
+
+		glGenTextures(1, &tex);
+		glBindTexture(GL_TEXTURE_2D, tex);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		//float pixels[] = {
+		//    0.0f, 0.0f, 0.0f,   0.0f, 0.0f, 0.0f,
+		//    0.0f, 0.0f, 0.0f,   0.0f, 0.0f, 0.0f
+		//};
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->textImgWidth, this->textImgHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, this->textureImg);
+		this->firstTime = false;
+	}
+
 	if (VAL(FRAME_ALL) == 1) {
 		this->m_camera->frameAll(VAL(XPOS), VAL(YPOS), VAL(ZPOS));
 		ModelerApplication::Instance()->SetControlValue(FRAME_ALL, 0);
@@ -313,9 +345,6 @@ void Model::draw()
 		if (right_leg_rotate <= Model::RIGHT_LEG_X_ROTATE_MIN) Model::RIGHT_LEG_MOVEMENT = 1;
 		app->SetControlValue(RIGHT_LEG_X_ROTATE, right_leg_rotate + Model::RIGHT_LEG_MOVEMENT);
 	}
-
-	// Determine adjust body component or not
-	bool isAdjust = VAL(ADJUST_BODY) == 1;
 
 	// draw the floor and center
 	setAmbientColor(.1f,.1f,.1f);
@@ -360,7 +389,9 @@ void Model::draw()
 		Model::drawHorn();
 
 		glTranslated(0, 0, -5);
-		drawTorus(1.5, 0.5);
+		if(isTexture) setDiffuseColor(COLOR_WHITE);
+		drawTorus(1.5, 0.5, isTexture);
+		setDiffuseColor(COLOR_GREEN);
 		glTranslated(0, 0, 5);
 
 		//translate back

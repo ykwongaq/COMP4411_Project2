@@ -1,6 +1,9 @@
 #ifndef MODEL_H
 #define MODEL_H
 
+#include <FL/gl.h>
+#include <GL/glu.h>
+
 #include "modelerview.h"
 
 // To make a Model, we inherit off of ModelerView
@@ -43,6 +46,13 @@ public:
 	const static int RIGHT_LEG_X_ROTATE_MAX			=  60;
 	const static int RIGHT_LEG_X_ROTATE_MIN			= -60;
 private:
+
+	unsigned char *textureImg;
+	int textImgWidth;
+	int textImgHeight;
+	GLuint tex;
+	bool firstTime;
+
 	void rotate(const double &x, const double &y, const double &z);	// Rotate the body
 	void back_rotate(const double &x, const double &y, const double &z); // Back rotate the body
 };

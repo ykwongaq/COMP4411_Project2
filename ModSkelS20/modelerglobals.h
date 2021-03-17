@@ -53,6 +53,8 @@ enum SampleModelControls
 	ADJUST_BODY,
 	// Frame all
 	FRAME_ALL,
+	// Enable texture mapping
+	TEXTURE_MAPPING,
 	// Number of controls
 	NUMCONTROLS
 };
@@ -61,6 +63,7 @@ enum SampleModelControls
 #define COLOR_RED		1.0f, 0.0f, 0.0f
 #define COLOR_GREEN		0.0f, 1.0f, 0.0f
 #define COLOR_BLUE		0.0f, 0.0f, 1.0f
+#define COLOR_WHITE		1.0f, 1.0f, 1.0f
 
 // We'll be getting the instance of the application a lot; 
 // might as well have it as a macro.

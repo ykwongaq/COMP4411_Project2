@@ -417,7 +417,7 @@ void drawTriangle( double x1, double y1, double z1,
 }
 
 // Draw torus
-void drawTorus(const double &outer_r, const double &inner_r) {
+void drawTorus(const double &outer_r, const double &inner_r, bool isTexture) {
     // Torus in 3D:
     // x = (R + r cos(theta))cos(gamma)
     // y = (R + r cos(theta))sin(gamma)
@@ -441,7 +441,7 @@ void drawTorus(const double &outer_r, const double &inner_r) {
     }
 
     int numc = 2 * numt;
-
+    if(isTexture) glEnable(GL_TEXTURE_2D);
     for (int i = 0; i < numc; i++) {
         glBegin(GL_QUAD_STRIP);
         for (int j = 0; j <= numt; j++) {
@@ -452,11 +452,19 @@ void drawTorus(const double &outer_r, const double &inner_r) {
                 x = (outer_r + inner_r * cos(s / numc * twoPi)) * cos(t / numt * twoPi);
                 y = (outer_r + inner_r * cos(s / numc * twoPi)) * sin(t / numt * twoPi);
                 z = inner_r * sin(s * twoPi / numc);
+
+                if (isTexture) {
+                    double u = (i + k) / numc;
+                    double v = t / numt;
+                    glTexCoord2d(u, v);
+                }
+
                 glVertex3f(x, y, z);
             }
         }
         glEnd();
     }
+    if (isTexture) glDisable(GL_TEXTURE_2D);
 }
 
 
