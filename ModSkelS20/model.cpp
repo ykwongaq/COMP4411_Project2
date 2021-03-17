@@ -339,7 +339,7 @@ void Model::draw()
 		if (left_leg_rotate <= Model::LEFT_LEG_X_ROTATE_MIN) Model::LEFT_LEG_MOVEMENT = 1;
 		app->SetControlValue(LEFT_LEG_X_ROTATE, left_leg_rotate + Model::LEFT_LEG_MOVEMENT);
 
-		// Handle right leg movment
+		// Handle right leg movement
 		double right_leg_rotate = app->GetControlValue(RIGHT_LEG_X_ROTATE);
 		if (right_leg_rotate >= Model::RIGHT_LEG_X_ROTATE_MAX) Model::RIGHT_LEG_MOVEMENT = -1;
 		if (right_leg_rotate <= Model::RIGHT_LEG_X_ROTATE_MIN) Model::RIGHT_LEG_MOVEMENT = 1;
