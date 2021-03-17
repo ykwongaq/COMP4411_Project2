@@ -51,6 +51,8 @@ enum SampleModelControls
 	ANIMATION,
 	// Adjustment on body,
 	ADJUST_BODY,
+	// Frame all
+	FRAME_ALL,
 	// Number of controls
 	NUMCONTROLS
 };

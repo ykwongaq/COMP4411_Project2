@@ -188,12 +188,24 @@ void Camera::applyViewingTransform() {
 
 	this->lookAt(this->mPosition, this->mLookAt, this->mUpVector);
 }
+
+// Set the position of camera such as the whole model can been seen
+void Camera::frameAll(const double &x, const double &y, const double &z) {
+	this->mElevation		= 0.2f;
+	this->mAzimuth			= 3.141593;
+	this->mDolly			= -38.640045;
+	this->mPosition			= Vec3f(0.000003f + x, 7.676592 + y, 37.869816+z);
+	this->mLookAt			= Vec3f(0+x, 0+y, 0+z);
+	this->mUpVector			= Vec3f(0, 1, 0);
+	this->mDirtyTransform	= false;
+	this->lookAt(this->mPosition, this->mLookAt, this->mUpVector);
+}
 	
 
 
 // Self-defined lookAt function
 void Camera::lookAt(Vec3f eye, Vec3f at, Vec3f up) {
-	
+
 	// Calculate the unit vector pointing from eye to reference point
 	Vec3f forward = eye - at;
 	forward.normalize();

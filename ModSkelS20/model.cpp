@@ -7,6 +7,7 @@
 #include "modelerglobals.h"
 #include "modelerapp.h"
 #include "modelerapp.h"
+#include "camera.h"
 
 int Model::LEFT_SHOULDER_MOVEMENT	= 1;
 int Model::RIGHT_SHOULDER_MOVEMENT	= 1;
@@ -274,6 +275,11 @@ Model::Model(int x, int y, int w, int h, char *label) : ModelerView(x, y, w, h, 
 // method of ModelerView to draw out SampleModel
 void Model::draw()
 {	
+	if (VAL(FRAME_ALL) == 1) {
+		this->m_camera->frameAll(VAL(XPOS), VAL(YPOS), VAL(ZPOS));
+		ModelerApplication::Instance()->SetControlValue(FRAME_ALL, 0);
+	}
+
     // This call takes care of a lot of the nasty projection 
     // matrix stuff.  Unless you want to fudge directly with the 
 	// projection matrix, don't bother with this ...

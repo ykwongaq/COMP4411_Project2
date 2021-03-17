@@ -34,14 +34,14 @@ public:
 	static int RIGHT_LEG_MOVEMENT;
 	
 	// Max angle of rotate of different parts of body
-	const static int LEFT_SHOULDER_X_ROTATE_MAX = 60;
-	const static int LEFT_SHOULDER_X_ROTATE_MIN = -60;
-	const static int RIGHT_SHOULDER_X_ROTATE_MAX = 60;
-	const static int RIGHT_SHOULDER_X_ROTATE_MIN = -60;
-	const static int LEFT_LEG_X_ROTATE_MAX = 60;
-	const static int LEFT_LEG_X_ROTATE_MIN = -60;
-	const static int RIGHT_LEG_X_ROTATE_MAX = 60;
-	const static int RIGHT_LEG_X_ROTATE_MIN = -60;
+	const static int LEFT_SHOULDER_X_ROTATE_MAX		=  60;
+	const static int LEFT_SHOULDER_X_ROTATE_MIN		= -60;
+	const static int RIGHT_SHOULDER_X_ROTATE_MAX	=  60;
+	const static int RIGHT_SHOULDER_X_ROTATE_MIN	= -60;
+	const static int LEFT_LEG_X_ROTATE_MAX			=  60;
+	const static int LEFT_LEG_X_ROTATE_MIN			= -60;
+	const static int RIGHT_LEG_X_ROTATE_MAX			=  60;
+	const static int RIGHT_LEG_X_ROTATE_MIN			= -60;
 private:
 	void rotate(const double &x, const double &y, const double &z);	// Rotate the body
 	void back_rotate(const double &x, const double &y, const double &z); // Back rotate the body

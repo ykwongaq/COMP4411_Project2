@@ -87,6 +87,8 @@ int main() {
 	controls[ANIMATION] = ModelerControl("Animation", 0, 1, 1, 0);
 	// Adjustment on body
 	controls[ADJUST_BODY] = ModelerControl("Adjust Body?", 0, 1, 1, 0);
+	// Frame all
+	controls[FRAME_ALL] = ModelerControl("Frame All", 0, 1, 1, 0);
 
 	ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS); // Use the controls array to create the appropriate sliders.
 	return ModelerApplication::Instance()->Run();	// Run the application.

@@ -80,6 +80,7 @@ public:
     
     //---[ Viewing Transform ]--------------------------------
     void applyViewingTransform();
+    void frameAll(const double &, const double &, const double &);
 
 	// gluLookAt equivalent
 	void lookAt(Vec3f eye, Vec3f at, Vec3f up);
