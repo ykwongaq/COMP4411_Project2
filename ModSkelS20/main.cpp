@@ -91,7 +91,8 @@ int main() {
 	controls[FRAME_ALL] = ModelerControl("Frame All", 0, 1, 1, 0);
 	// Texture mapping
 	controls[TEXTURE_MAPPING] = ModelerControl("Texture Mapping", 0, 1, 1, 0);
-
+	// Level Control	
+	controls[LEVEL_CONTROL] = ModelerControl("Level Control", 0, 4, 1, 4);
 	ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS); // Use the controls array to create the appropriate sliders.
 	return ModelerApplication::Instance()->Run();	// Run the application.
 }

@@ -55,6 +55,8 @@ enum SampleModelControls
 	FRAME_ALL,
 	// Enable texture mapping
 	TEXTURE_MAPPING,
+	// Level Control
+	LEVEL_CONTROL,
 	// Number of controls
 	NUMCONTROLS
 };
