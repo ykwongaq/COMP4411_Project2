@@ -416,6 +416,49 @@ void drawTriangle( double x1, double y1, double z1,
     }
 }
 
+// Draw torus
+void drawTorus(const double &outer_r, const double &inner_r) {
+    // Torus in 3D:
+    // x = (R + r cos(theta))cos(gamma)
+    // y = (R + r cos(theta))sin(gamma)
+    // z = r(sin(theta))
+
+    double s, t, x, y, z;
+    double twoPi = 2 * M_PI;
+
+    int numt = 32;
+
+    ModelerDrawState *mds = ModelerDrawState::Instance();
+    switch (mds->m_quality) {
+        case HIGH:
+            numt = 16; break;
+        case MEDIUM:
+            numt = 14; break;
+        case LOW:
+            numt = 10; break;
+        case POOR:
+            numt = 8; break;
+    }
+
+    int numc = 2 * numt;
+
+    for (int i = 0; i < numc; i++) {
+        glBegin(GL_QUAD_STRIP);
+        for (int j = 0; j <= numt; j++) {
+            for (int k = 1; k >= 0; k--) {
+                s = (i + k) % numc + 0.5;
+                t = j % numt;
+
+                x = (outer_r + inner_r * cos(s / numc * twoPi)) * cos(t / numt * twoPi);
+                y = (outer_r + inner_r * cos(s / numc * twoPi)) * sin(t / numt * twoPi);
+                z = inner_r * sin(s * twoPi / numc);
+                glVertex3f(x, y, z);
+            }
+        }
+        glEnd();
+    }
+}
+
 
 
 

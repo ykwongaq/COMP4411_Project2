@@ -359,6 +359,10 @@ void Model::draw()
 		Model::drawHead();
 		Model::drawHorn();
 
+		glTranslated(0, 0, -5);
+		drawTorus(1.5, 0.5);
+		glTranslated(0, 0, 5);
+
 		//translate back
 		this->back_rotate(-VAL(HEAD_X_ROTATE), -VAL(HEAD_Y_ROTATE), -VAL(HEAD_Z_ROTATE));
 		glRotated(0, 0.0, 0.0, 1.0);
