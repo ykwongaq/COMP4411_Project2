@@ -55,6 +55,7 @@ private:
 
 	void rotate(const double &x, const double &y, const double &z);	// Rotate the body
 	void back_rotate(const double &x, const double &y, const double &z); // Back rotate the body
+	void prepare_texture();
 };
 
 #endif

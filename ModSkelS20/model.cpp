@@ -269,6 +269,22 @@ void Model::back_rotate(const double &x, const double &y, const double &z) {
 	glRotated(x, 1.0, 0.0, 0.0);
 }
 
+void Model::prepare_texture() {
+	this->textureImg = readBMP("Images/water.bmp", this->textImgWidth, this->textImgHeight);
+	if (this->textureImg == nullptr) { printf("Texture image not found.\n"); }
+
+	glGenTextures(1, &tex);
+	glBindTexture(GL_TEXTURE_2D, tex);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->textImgWidth, this->textImgHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, this->textureImg);
+}
+
 
 Model::Model(int x, int y, int w, int h, char *label) : ModelerView(x, y, w, h, label) {
 	this->textureImg = nullptr;
@@ -286,24 +302,7 @@ void Model::draw()
 	bool isTexture	= VAL(TEXTURE_MAPPING) == 1;
 
 	if (firstTime) {
-		//texImg = Fl_Shared_Image::get("texImg.png", 256, 256);
-		this->textureImg = readBMP("Images/water.bmp", this->textImgWidth, this->textImgHeight);
-		if (this->textureImg == nullptr) { printf("Texture image not found.\n"); }
-
-		glGenTextures(1, &tex);
-		glBindTexture(GL_TEXTURE_2D, tex);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		//float pixels[] = {
-		//    0.0f, 0.0f, 0.0f,   0.0f, 0.0f, 0.0f,
-		//    0.0f, 0.0f, 0.0f,   0.0f, 0.0f, 0.0f
-		//};
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->textImgWidth, this->textImgHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, this->textureImg);
+		this->prepare_texture();
 		this->firstTime = false;
 	}
 
