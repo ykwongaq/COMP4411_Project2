@@ -514,6 +514,7 @@ void Model::draw()
 			glTranslated(0, -0.35, 0);
 			glTranslated(0, +0.35, 0);
 			glRotated(-7, 0.0, 1.0, 0.0);
+
 		}
 
 		/*** here can add XYZ "left wrist rotation"***/
@@ -614,6 +615,36 @@ void Model::draw()
 			drawBox(-0.1f, 0.4, 0.6);
 		}
 
+		glPopMatrix();
+
+
+		glPushMatrix();
+		if (VAL(METABALL)) {
+			glRotated(-90, 1, 0, 0);
+			//glRotated(VAL(METABALL_ROTATION), 0, 0, 1);
+			glTranslated(7.0, 0.0, 0.0);
+			//glScaled(VAL(METABALL_LENGTH), 0.5, 0.8);
+
+			//auto m_func = [](double x, double y, double z)
+			//	-> double {return metaballFunc(0.2, 0, 0, x, y, z); };
+
+			auto m_func = [](double x, double y, double z)
+				-> double {return metaballFunc(-0.1, 0, 0, x, y, z) + metaballFunc(0.1, 0, 0, x, y, z); };
+
+			drawMetaball(m_func(1.12, 0, 0), 1, m_func);
+			glTranslated(-7.0, 0.0, 0.0);
+
+			glRotated(VAL(METABALL_ROTATION), 0, 0, 1);
+			glTranslated(7.0, 0.0, 0.0);
+
+			drawMetaball(m_func(1.12, 0, 0), 1.5, m_func);
+
+			//translate back
+			//glScaled(1 /VAL(METABALL_LENGTH), 1 / 0.5, 1 / 0.8);
+
+
+
+		}
 		glPopMatrix();
 
 		//draw the down body 

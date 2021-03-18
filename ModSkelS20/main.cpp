@@ -93,6 +93,11 @@ int main() {
 	controls[TEXTURE_MAPPING] = ModelerControl("Texture Mapping", 0, 1, 1, 0);
 	// Level Control	
 	controls[LEVEL_CONTROL] = ModelerControl("Level Control", 0, 4, 1, 4);
+	// For meta ball
+	controls[METABALL] = ModelerControl("Enable metaball", 0, 1, 1, 0);
+	controls[METABALL_RESOLUTION] = ModelerControl("Metaball Resolution", 0.05, 0.3, 0.01, 0.15);
+	controls[METABALL_ROTATION] = ModelerControl("Metaball Rotation", 180, -180, 1, 0);
+	controls[METABALL_LENGTH] = ModelerControl("Metaball length", 4.5, 1, 0.5, 3.5);
 	ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS); // Use the controls array to create the appropriate sliders.
 	return ModelerApplication::Instance()->Run();	// Run the application.
 }

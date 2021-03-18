@@ -57,6 +57,11 @@ enum SampleModelControls
 	TEXTURE_MAPPING,
 	// Level Control
 	LEVEL_CONTROL,
+	// Met ball Control
+	METABALL, 
+	METABALL_RESOLUTION,
+	METABALL_ROTATION,
+	METABALL_LENGTH,
 	// Number of controls
 	NUMCONTROLS
 };
