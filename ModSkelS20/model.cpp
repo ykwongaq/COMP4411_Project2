@@ -338,12 +338,16 @@ void Model::draw()
 		double left_leg_rotate = app->GetControlValue(LEFT_LEG_X_ROTATE);
 		if (left_leg_rotate >= Model::LEFT_LEG_X_ROTATE_MAX) Model::LEFT_LEG_MOVEMENT = -1;
 		if (left_leg_rotate <= Model::LEFT_LEG_X_ROTATE_MIN) Model::LEFT_LEG_MOVEMENT = 1;
+		//printf("left leg rotation %f -> %f \n", left_leg_rotate, left_leg_rotate + Model::LEFT_LEG_MOVEMENT);
+
 		app->SetControlValue(LEFT_LEG_X_ROTATE, left_leg_rotate + Model::LEFT_LEG_MOVEMENT);
 
 		// Handle right leg movement
 		double right_leg_rotate = app->GetControlValue(RIGHT_LEG_X_ROTATE);
 		if (right_leg_rotate >= Model::RIGHT_LEG_X_ROTATE_MAX) Model::RIGHT_LEG_MOVEMENT = -1;
 		if (right_leg_rotate <= Model::RIGHT_LEG_X_ROTATE_MIN) Model::RIGHT_LEG_MOVEMENT = 1;
+		//printf("right leg rotation %f -> %f \n", right_leg_rotate, right_leg_rotate + Model::RIGHT_LEG_MOVEMENT);
+
 		app->SetControlValue(RIGHT_LEG_X_ROTATE, right_leg_rotate + Model::RIGHT_LEG_MOVEMENT);
 	}
 
@@ -549,7 +553,7 @@ void Model::draw()
 		// albow
 		glTranslated(-0.8, 0.0, 4);
 		/*** here can add XYZ "right albow rotation"***/
-		this->rotate(-VAL(RIGHT_ELBOW_X_ROTATE), -VAL(RIGHT_ELBOW_Y_ROTATE), -VAL(RIGHT_ELBOW_Z_ROTATE));
+		this->rotate(VAL(RIGHT_ELBOW_X_ROTATE), -VAL(RIGHT_ELBOW_Y_ROTATE), -VAL(RIGHT_ELBOW_Z_ROTATE));
 
 		//for picking
 		glRotated(-VAL(PICKING), 0.0, 1.0, 0.0);
@@ -618,14 +622,14 @@ void Model::draw()
 			Model::drawLowerBody();
 		glPopMatrix();
 
-		// draw the right leg
+		// draw the left leg
 		glPushMatrix();
 		glRotated(90, 1.0, 0.0, 0.0);
 
-		glRotated(20, 0.0, 1.0, 0.0);
-		glRotated(25, 1.0, 0.0, 0.0);
+		//glRotated(20, 0.0, 1.0, 0.0);
+		//glRotated(25, 1.0, 0.0, 0.0);
 		/***here can add X Y Z rotation and counted as " right leg roation"***/
-		this->rotate(VAL(RIGHT_LEG_X_ROTATE), VAL(RIGHT_LEG_Y_ROTATE), VAL(RIGHT_LEG_Z_ROTATE));
+		this->rotate(VAL(LEFT_LEG_X_ROTATE), -VAL(LEFT_LEG_Y_ROTATE), -VAL(LEFT_LEG_Z_ROTATE));
 
 		if (level >= 2) {
 			if (isAdjust) {
@@ -656,8 +660,8 @@ void Model::draw()
 		setDiffuseColor(COLOR_GREEN);
 		glRotated(-20, 0.0, 1.0, 0.0);
 		glRotated(-25, 1.0, 0.0, 0.0);
-		/***here can add X Y Z rotation and counted as "right ankle roation"***/
-		this->rotate(VAL(RIGHT_CALF_X_ROTATE), VAL(RIGHT_CALF_Y_ROTATE), VAL(RIGHT_CALF_Z_ROTATE));
+		/***here can add X Y Z rotation and counted as "left ankle roation"***/
+		this->rotate(VAL(LEFT_CALF_X_ROTATE), -VAL(LEFT_CALF_Y_ROTATE), -VAL(LEFT_CALF_Z_ROTATE));
 		if (level >= 3) {
 			if (isAdjust) {
 				// Draw cylinder leg
@@ -685,21 +689,21 @@ void Model::draw()
 		setDiffuseColor(COLOR_GREEN);
 		/***here can add X Y Z rotation and counted as "right ankle roation"***/
 		glTranslated(0, 0, -0.75);
-		this->rotate(VAL(RIGHT_FOOT_X_ROTATE), VAL(RIGHT_FOOT_Y_ROTATE), VAL(RIGHT_FOOT_Z_ROTATE));
+		this->rotate(VAL(LEFT_FOOT_X_ROTATE), -VAL(LEFT_FOOT_Y_ROTATE),-VAL(LEFT_FOOT_Z_ROTATE));
 		glTranslated(0, 0, 0.75);
 		if (level >= 4) {
 			Model::drawRightFoot();
 		}
 		glPopMatrix();
 
-		// draw the left leg
+		// draw the right leg
 		glPushMatrix();
 		glRotated(90, 1.0, 0.0, 0.0);
 
-		glRotated(-20, 0.0, 1.0, 0.0);
-		glRotated(25, 1.0, 0.0, 0.0);
-		/***here can add X Y Z rotation and counted as " left leg roation"***/
-		this->rotate(VAL(LEFT_LEG_X_ROTATE), VAL(LEFT_LEG_Y_ROTATE), VAL(LEFT_LEG_Z_ROTATE));
+		//glRotated(-20, 0.0, 1.0, 0.0);
+		//glRotated(25, 1.0, 0.0, 0.0);
+		/***here can add X Y Z rotation and counted as " right leg roation"***/
+		this->rotate(VAL(RIGHT_LEG_X_ROTATE), -VAL(RIGHT_LEG_Y_ROTATE), -VAL(RIGHT_LEG_Z_ROTATE));
 
 		if (level >= 2) {
 			if (isAdjust) {
@@ -730,7 +734,7 @@ void Model::draw()
 		glRotated(20, 0.0, 1.0, 0.0);
 		glRotated(-25, 1.0, 0.0, 0.0);
 		/***here can add X Y Z rotation and counted as "right ankle roation"***/
-		this->rotate(VAL(LEFT_CALF_X_ROTATE), VAL(LEFT_CALF_Y_ROTATE), VAL(LEFT_CALF_Z_ROTATE));
+		this->rotate(VAL(RIGHT_CALF_X_ROTATE), -VAL(RIGHT_CALF_Y_ROTATE), -VAL(RIGHT_CALF_Z_ROTATE));
 		if (level >= 3) {
 			if (isAdjust) {
 				// Draw cylinder leg
@@ -756,7 +760,7 @@ void Model::draw()
 		setDiffuseColor(COLOR_GREEN);
 		/***here can add X Y Z rotation and counted as "right ankle roation"***/
 		glTranslated(0, 0, -0.75);
-		this->rotate(VAL(LEFT_FOOT_X_ROTATE), VAL(LEFT_FOOT_Y_ROTATE), VAL(LEFT_FOOT_Z_ROTATE));
+		this->rotate(VAL(RIGHT_FOOT_X_ROTATE), -VAL(RIGHT_FOOT_Y_ROTATE), -VAL(RIGHT_FOOT_Z_ROTATE));
 		glTranslated(0, 0, 0.75);
 		if (level >= 4) {
 			Model::drawLeftFoot();
