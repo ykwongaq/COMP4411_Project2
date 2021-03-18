@@ -852,7 +852,7 @@ void triangulize(double threshold, Cell grid) {
 void drawMetaball(double threshold, const double r, double (*metaballFunc)(double x, double y, double z)) {
     // r is the radius of the metaball, 
     // r should be positive
-    double border = 14;
+    double border = 0.4;
     double cellSize = VAL(METABALL_RESOLUTION);
 
     for (double x = -r - border; x <= r + border; x += cellSize) {

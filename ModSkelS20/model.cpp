@@ -613,38 +613,43 @@ void Model::draw()
 
 			glTranslated(0.4, -0.2, 0);
 			drawBox(-0.1f, 0.4, 0.6);
-		}
-
-		glPopMatrix();
-
-
-		glPushMatrix();
-		if (VAL(METABALL)) {
-			glRotated(-90, 1, 0, 0);
-			//glRotated(VAL(METABALL_ROTATION), 0, 0, 1);
-			glTranslated(7.0, 0.0, 0.0);
-			//glScaled(VAL(METABALL_LENGTH), 0.5, 0.8);
-
-			//auto m_func = [](double x, double y, double z)
-			//	-> double {return metaballFunc(0.2, 0, 0, x, y, z); };
-
-			auto m_func = [](double x, double y, double z)
-				-> double {return metaballFunc(-0.1, 0, 0, x, y, z) + metaballFunc(0.1, 0, 0, x, y, z); };
-
-			drawMetaball(m_func(1.12, 0, 0), 1, m_func);
-			glTranslated(-7.0, 0.0, 0.0);
-
-			glRotated(VAL(METABALL_ROTATION), 0, 0, 1);
-			glTranslated(7.0, 0.0, 0.0);
-
-			drawMetaball(m_func(1.12, 0, 0), 1.5, m_func);
 
 			//translate back
-			//glScaled(1 /VAL(METABALL_LENGTH), 1 / 0.5, 1 / 0.8);
+			glTranslated(-0.4, +0.2, 0);
+			glRotated(-15, 0.0, 1.0, 0.0);
+			glRotated(25, 0.0, 1.0, 0.0);
+			glTranslated(0, -0.35, +0.7);
+			glRotated(-25, 0.0, 1.0, 0.0);
+			glTranslated(0, +0.35, -0.7);
+			glTranslated(0, -0.35, 0);
+			glTranslated(0, +0.35, 0);
+			glRotated(7, 0.0, 1.0, 0.0);
 
+			if (VAL(METABALL)) {
+				glRotated(-10, 0.0, 1.0, 0.0);
+				glRotated(7, 0.0, 1.0, 0.0);
+				glTranslated(0.6, 0, 0.7);
+				glRotated(-90, 0, 0, 1);
+				glRotated(VAL(METABALL_SECOND_ROTATION), 0, 1, 0);
+				glRotated(VAL(METABALL_FIRST_ROTATION), 1, 0, 0);
+				glScaled(VAL(METABALL_LENGTH), 0.5, 0.8);
 
+				auto m_func = [](double x, double y, double z)
+					-> double {return	metaballFunc(-VAL(METABALL_MERGE), 0, 0, x, y, z) +
+					metaballFunc(VAL(METABALL_MERGE), 0, 0, x, y, z); };
 
+				drawMetaball(m_func(1.12, 0, 0), 0.8, m_func);
+
+				//translate back
+				//glScaled(1 / VAL(METABALL_LENGTH), 1 / 0.5, 1 / 0.8);
+				//glRotated(-VAL(METABALL_FIRST_ROTATION), 1, 0, 0);
+				//glRotated(-VAL(METABALL_SECOND_ROTATION), 0, 1, 0);
+				//glRotated(90, 0, 0, 1);
+				//glTranslated(-0.8, 0, -0.7);
+				//glRotated(-7, 0.0, 1.0, 0.0);
+			}
 		}
+
 		glPopMatrix();
 
 		//draw the down body 
