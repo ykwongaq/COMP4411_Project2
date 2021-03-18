@@ -30,18 +30,18 @@ enum SampleModelControls
 	// Upper body controls 
 	WHOLE_UPPER_BODY_ROTATE, PICKING,
 	// ------------------------------------- Lower Body Controls -------------------------------------
-	// Right leg controls
-	RIGHT_LEG_X_ROTATE, RIGHT_LEG_Y_ROTATE, RIGHT_LEG_Z_ROTATE,
-	// Right calf controls
-	RIGHT_CALF_X_ROTATE, RIGHT_CALF_Y_ROTATE, RIGHT_CALF_Z_ROTATE, 
-	// Right foot controls
-	RIGHT_FOOT_X_ROTATE, RIGHT_FOOT_Y_ROTATE, RIGHT_FOOT_Z_ROTATE,
 	// Left leg controls
 	LEFT_LEG_X_ROTATE, LEFT_LEG_Y_ROTATE, LEFT_LEG_Z_ROTATE,
 	// Left calf controls
 	LEFT_CALF_X_ROTATE, LEFT_CALF_Y_ROTATE, LEFT_CALF_Z_ROTATE,
 	// Left foot controls
 	LEFT_FOOT_X_ROTATE, LEFT_FOOT_Y_ROTATE, LEFT_FOOT_Z_ROTATE,
+	// Right leg controls
+	RIGHT_LEG_X_ROTATE, RIGHT_LEG_Y_ROTATE, RIGHT_LEG_Z_ROTATE,
+	// Right calf controls
+	RIGHT_CALF_X_ROTATE, RIGHT_CALF_Y_ROTATE, RIGHT_CALF_Z_ROTATE,
+	// Right foot controls
+	RIGHT_FOOT_X_ROTATE, RIGHT_FOOT_Y_ROTATE, RIGHT_FOOT_Z_ROTATE,
 	// ------------------------------------- Bonus Controls -------------------------------------
 	// Light position controls
 	LIGHT_X_POS, LIGHT_Y_POS, LIGHT_Z_POS,
@@ -55,6 +55,8 @@ enum SampleModelControls
 	FRAME_ALL,
 	// Enable texture mapping
 	TEXTURE_MAPPING,
+	// Level Control
+	LEVEL_CONTROL,
 	// Number of controls
 	NUMCONTROLS
 };
