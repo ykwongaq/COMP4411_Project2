@@ -35,6 +35,7 @@ public:
 	static int RIGHT_SHOULDER_MOVEMENT;
 	static int LEFT_LEG_MOVEMENT;
 	static int RIGHT_LEG_MOVEMENT;
+	static int HEAD_MOVEMENT;
 	
 	// Max angle of rotate of different parts of body
 	const static int LEFT_SHOULDER_X_ROTATE_MAX		=  68;
@@ -45,6 +46,8 @@ public:
 	const static int LEFT_LEG_X_ROTATE_MIN			= -35;
 	const static int RIGHT_LEG_X_ROTATE_MAX			=  85;
 	const static int RIGHT_LEG_X_ROTATE_MIN			= -35;
+	const static int HEAD_Z_ROTATE_MAX				=  20;
+	const static int HEAD_Z_ROTATE_MIN				= -20;
 private:
 
 	unsigned char *textureImg;

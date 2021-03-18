@@ -57,6 +57,8 @@ enum SampleModelControls
 	TEXTURE_MAPPING,
 	// Level Control
 	LEVEL_CONTROL,
+	// Mood Control
+	SAD_MOOD,
 	// Number of controls
 	NUMCONTROLS
 };

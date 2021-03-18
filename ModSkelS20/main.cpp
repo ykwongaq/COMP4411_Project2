@@ -93,6 +93,9 @@ int main() {
 	controls[TEXTURE_MAPPING] = ModelerControl("Texture Mapping", 0, 1, 1, 0);
 	// Level Control	
 	controls[LEVEL_CONTROL] = ModelerControl("Level Control", 0, 4, 1, 4);
+	// Mood Control
+	controls[SAD_MOOD] = ModelerControl("Sad Mood", 0, 1, 1, 0);
+
 	ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS); // Use the controls array to create the appropriate sliders.
 	return ModelerApplication::Instance()->Run();	// Run the application.
 }

@@ -12,8 +12,9 @@
 
 int Model::LEFT_SHOULDER_MOVEMENT	= 1;
 int Model::RIGHT_SHOULDER_MOVEMENT	= 1;
-int Model::LEFT_LEG_MOVEMENT	= 1;
-int Model::RIGHT_LEG_MOVEMENT	= -1;
+int Model::LEFT_LEG_MOVEMENT		= 1;
+int Model::RIGHT_LEG_MOVEMENT		= -1;
+int Model::HEAD_MOVEMENT			= 1;
 
 // Draw uppper body of the robot
 void Model::drawUpperBody() {
@@ -392,6 +393,17 @@ void Model::draw()
 
 		//draw the head
 		glTranslated(0, 0, -6);
+
+		// If the model is in sad mood, he will shake his head 
+		if (VAL(SAD_MOOD) == 1) {
+			ModelerApplication *app = ModelerApplication::Instance();
+
+			double head_rotate = app->GetControlValue(HEAD_Z_ROTATE);
+			if (head_rotate >= Model::HEAD_Z_ROTATE_MAX) Model::HEAD_MOVEMENT = -1;
+			if (head_rotate <= Model::HEAD_Z_ROTATE_MIN) Model::HEAD_MOVEMENT = 1;
+			app->SetControlValue(HEAD_Z_ROTATE, head_rotate + Model::HEAD_MOVEMENT);
+		}
+
 		this->rotate(VAL(HEAD_X_ROTATE), VAL(HEAD_Y_ROTATE), VAL(HEAD_Z_ROTATE));
 
 		if (level >= 2) {
