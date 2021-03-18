@@ -193,8 +193,8 @@ void Camera::applyViewingTransform() {
 void Camera::frameAll(const double &x, const double &y, const double &z) {
 	this->mElevation		= 0.2f;
 	this->mAzimuth			= 3.141593;
-	this->mDolly			= -38.640045;
-	this->mPosition			= Vec3f(0.000003f + x, 7.676592 + y, 37.869816+z);
+	this->mDolly			= -48.720108;
+	this->mPosition			= Vec3f(0.000004f + x, 9.679192 + y, 47.748951+z);
 	this->mLookAt			= Vec3f(0+x, 0+y, 0+z);
 	this->mUpVector			= Vec3f(0, 1, 0);
 	this->mDirtyTransform	= false;
