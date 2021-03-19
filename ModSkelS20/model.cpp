@@ -697,10 +697,10 @@ void Model::draw() {
 	setDiffuseColor(COLOR_GREEN);
 	glTranslated(0, 0, 5);
 
-		//translate back
-		this->back_rotate(-VAL(HEAD_X_ROTATE), -VAL(HEAD_Y_ROTATE), -VAL(HEAD_Z_ROTATE));
-		//glRotated(0, 0.0, 0.0, 1.0);
-		glTranslated(0, 0, 6.3);
+	//translate back
+	this->back_rotate(-VAL(HEAD_X_ROTATE), -VAL(HEAD_Y_ROTATE), -VAL(HEAD_Z_ROTATE));
+	//glRotated(0, 0.0, 0.0, 1.0);
+	glTranslated(0, 0, 6.3);
 
 
 	//draw the left arm
@@ -755,7 +755,7 @@ void Model::draw() {
 		 
 		Vec3f segment1 = this->segment1End - this->segment1Start;
 		Vec3f segment2 = this->segment2End - this->segment2Start;
-		float angle4 = -this->calAngle(segment1, segment2);
+		float angle4 = this->calAngle(segment2, segment1);
 		printf("angle4 = %f\n", angle4);
 		this->beta = -angle4;
 
@@ -781,7 +781,7 @@ void Model::draw() {
 			glTranslated(0.9, 0.0, 0.0);
 			drawCylinder(3, 0.4, 0.4);
 			glTranslated(-0.9, 0.0, 0.0);
-		} 			else {
+		} else {
 			// Draw triangular arm
 			Model::drawLeftUpperArm();
 		}
@@ -882,13 +882,13 @@ void Model::draw() {
 		this->back_rotate(-VAL(LEFT_ELBOW_X_ROTATE), -VAL(LEFT_ELBOW_Y_ROTATE), -VAL(LEFT_ELBOW_Z_ROTATE));
 	glTranslated(-0.8, 0.0, -4);
 	/***translate back the left shoulder rotation***/
-	glRotated(-VAL(PICKING), 0.0, 0.0, 1.0);
+	
 	if (VAL(IK_ENABLE)) {
 		this->back_rotate(-this->alpha, 0, 0);
 	} else {
 		this->back_rotate(-VAL(LEFT_SHOULDER_X_ROTATE), -VAL(LEFT_SHOULDER_Y_ROTATE), -VAL(LEFT_SHOULDER_Z_ROTATE));
 	}
-	
+	glRotated(-VAL(PICKING), 0.0, 0.0, 1.0);
 	glTranslated(-3.8, 0.0, 6.5);
 
 	//this->drawArmVector();
