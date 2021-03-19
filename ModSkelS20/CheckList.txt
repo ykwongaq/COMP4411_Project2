@@ -1,0 +1,32 @@
+Modeler Bells and Whistles checklist for grading
+
+HKUST login(s): ykwongaq glinad
+
+Basic requirements: 
+Please state what 2B you implemented to exclude from your B/W scores below
+B Texture Mapping
+B Polygonal Faces (Triangles)
+
+B/W:
+
+Delete yes/no when appropriate
+
+
+W dramatic light					yes
+W adjustable LoD					yes
+W your idea 						yes
+ - Picking controls / Winging
+B texture map						yes
+B polygonal faces (triangles)				yes
+B animation       					yes
+B individual looking (not just red/green) 		yes
+B frame all						yes
+BW up vector 						no
+2B new primitives for each 				yes
+ - Draw Torus Function
+2B L-system						yes
+2B mood cycling 					yes
+4B metaballs						yes
+8B goal-oriented motion 				yes
+ - Only support one dimensional movement due to the time limit. The movement is also not stable.
++4B joint contraints 					yes/no
