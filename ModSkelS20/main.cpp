@@ -93,6 +93,17 @@ int main() {
 	controls[TEXTURE_MAPPING] = ModelerControl("Texture Mapping", 0, 1, 1, 0);
 	// Level Control	
 	controls[LEVEL_CONTROL] = ModelerControl("Level Control", 0, 4, 1, 4);
+	// L system control
+	controls[LSYSTEM_SWITCH] = ModelerControl("Display Tree", 0, 1, 1, 0);
+	controls[LSYSTEM_STAGE] = ModelerControl("LSystem Stage", 1, 6, 1, 3);
+	controls[WING_FIRST_ROTATION] = ModelerControl("Wings Rotation", 20, -10, 1, 0);
+	// For meta ball
+	controls[METABALL] = ModelerControl("Enable metaball", 0, 1, 1, 0);
+	controls[METABALL_RESOLUTION] = ModelerControl("Metaball Resolution", 0.05, 0.3, 0.01, 0.15);
+	controls[METABALL_FIRST_ROTATION] = ModelerControl("Metaball First Rotation", 180, -180, 1, 0);
+	controls[METABALL_SECOND_ROTATION] = ModelerControl("Metaball Second Rotation", 180, -180, 1, 0);
+	controls[METABALL_LENGTH] = ModelerControl("Metaball length", 4.5, 1, 0.5, 3.5);
+	controls[METABALL_MERGE] = ModelerControl("Metaball Merge", 1.0, 0.25, 0.01, 0.54);
 	// Mood Control
 	controls[SAD_MOOD] = ModelerControl("Sad Mood", 0, 1, 1, 0);
 	// IK System

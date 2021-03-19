@@ -406,6 +406,126 @@ Model::Model(int x, int y, int w, int h, char *label) : ModelerView(x, y, w, h, 
 	this->beta = 0;
 }
 
+
+std::vector<char> Model::gsentence1(const int stage)
+{
+	std::vector<char> current, next;
+	current.push_back('F');
+	for (int i = 0; i < stage; ++i) {
+		next.clear();
+		for (int l = 0; l < current.size(); ++l) {
+			// F -> FFF+[+F-F-F]-[-F+F+F]
+			if (current[l] == 'F') {
+				next.push_back('F');
+				next.push_back('F');
+				next.push_back('+');
+				next.push_back('[');
+				next.push_back('+');
+				next.push_back('F');
+				next.push_back('-');
+				next.push_back('F');
+				next.push_back('-');
+				next.push_back('F');
+				next.push_back(']');
+				next.push_back('-');
+				next.push_back('[');
+				next.push_back('-');
+				next.push_back('F');
+				next.push_back('+');
+				next.push_back('F');
+				next.push_back('+');
+				next.push_back('F');
+				next.push_back(']');
+			}
+			else next.push_back(current[l]);
+		}
+		current = next;
+	}
+	return current;
+}
+
+std::vector<char> Model::gsentence2(const int stage)
+{
+	std::vector<char> current, next;
+	current.push_back('F');
+	for (int i = 0; i < stage; ++i) {
+		next.clear();
+		for (int l = 0; l < current.size(); ++l) {
+			// F -> FF-[-F+F+F]+[+F-F-F]
+			if (current[l] == 'F') {
+				next.push_back('F');
+				next.push_back('F');
+				next.push_back('-');
+				next.push_back('[');
+				next.push_back('-');
+				next.push_back('F');
+				next.push_back('+');
+				next.push_back('F');
+				next.push_back('+');
+				next.push_back('F');
+				next.push_back(']');
+				next.push_back('+');
+				next.push_back('[');
+				next.push_back('+');
+				next.push_back('F');
+				next.push_back('-');
+				next.push_back('F');
+				next.push_back('-');
+				next.push_back('F');
+				next.push_back(']');
+			}
+			else next.push_back(current[l]);
+		}
+		current = next;
+	}
+	return current;
+}
+
+void Model::drawLsystem(const std::vector<char>& sentence, int option)
+{
+
+	float len = 0.15;
+	glTranslated(1, 2.5, 0);
+	for (int i = 0; i < sentence.size(); ++i) {
+		char c = sentence[i];
+		switch (c) {
+		case 'F':
+			glLineWidth(2.0f);
+			glBegin(GL_LINES);
+			glVertex3f(0.0f, 0.0f, 0.0f);
+			glVertex3f(0.0f, len, 0.0f);
+			glEnd();
+			glTranslatef(0.0f, len, 0.0f);
+			break;
+		case '+':
+			if (option == 0) {
+				glRotatef(-25, 0, 0, 1);
+			}
+			else {
+				glRotatef(-25.3, 0, 0, 1);
+			}
+			break;
+		case '-':
+			if (option == 1) {
+				glRotatef(25, 0, 0, 1);
+			}
+			else {
+				glRotatef(25.3, 0, 0, 1);
+			}
+			break;
+		case '[':
+			glPushMatrix();
+			break;
+		case ']':
+			glPopMatrix();
+			break;
+		default: break;
+		}
+	}
+	
+}
+
+
 // We are going to override (is that the right word?) the draw()
 // method of ModelerView to draw out SampleModel
 void Model::draw() {
@@ -499,18 +619,50 @@ void Model::draw() {
 	/***this 0 can be changed as "upper body rotation"***/
 	glRotated(VAL(WHOLE_UPPER_BODY_ROTATE), 0.0, 0.0, 1.0);
 
-	if (level >= 1) {
-		if (isAdjust) {
-			// Draw sphere body
-			glTranslated(0.0, 0.0, -3.0);
-			drawSphere(2);
-			glTranslated(0.0, 0.0, 3.0);
-		} 			else {
-			// Draw triangular body
-			Model::drawUpperBody();
-		}
+		if (level >= 1) {
+			if (isAdjust) {
+				// Draw sphere body
+				glTranslated(0.0, 0.0, -3.0);
+				drawSphere(2);
+				glTranslated(0.0, 0.0, 3.0);
+			}
+			else {
+				// Draw triangular body
+				Model::drawUpperBody();
+			}
 
-	}
+		}
+		if (level >= 2) {
+			// draw the L system wings
+			if (VAL(LSYSTEM_SWITCH)) {
+				std::vector<char> sen_1 = gsentence1(VAL(LSYSTEM_STAGE));
+				std::vector<char> sen_2 = gsentence2(VAL(LSYSTEM_STAGE));
+				int option_right = 0;
+				int option_left = 1;
+
+				// left wing
+				glPushMatrix();
+				glRotated(-90, 1.0, 0.0, 0.0);
+				glTranslated(-2.0, 4.0, -3.2);
+				glRotated(-65, 0.0, 0.0, 1.0);
+
+				glRotated(VAL(WING_FIRST_ROTATION), 5, 18, 0);
+
+
+				drawLsystem(sen_1, option_left);
+
+				glPopMatrix();
+
+				//right wings
+				glPushMatrix();
+				glRotated(-90, 1.0, 0.0, 0.0);
+				glTranslated(1.1, 2.2, -3.2);
+				glRotated(65, 0.0, 0.0, 1.0);
+				glRotated(-VAL(WING_FIRST_ROTATION), 0.4, 1.0, 0.0);
+				drawLsystem(sen_2, option_right);
+				glPopMatrix();
+			}
+		}
 
 	//draw the head
 	glTranslated(0, 0, -6);
@@ -542,10 +694,10 @@ void Model::draw() {
 	setDiffuseColor(COLOR_GREEN);
 	glTranslated(0, 0, 5);
 
-	//translate back
-	this->back_rotate(-VAL(HEAD_X_ROTATE), -VAL(HEAD_Y_ROTATE), -VAL(HEAD_Z_ROTATE));
-	glRotated(0, 0.0, 0.0, 1.0);
-	glTranslated(0, 0, 6.5);
+		//translate back
+		this->back_rotate(-VAL(HEAD_X_ROTATE), -VAL(HEAD_Y_ROTATE), -VAL(HEAD_Z_ROTATE));
+		//glRotated(0, 0.0, 0.0, 1.0);
+		glTranslated(0, 0, 6.3);
 
 
 	//draw the left arm
@@ -702,26 +854,29 @@ void Model::draw() {
 		glTranslated(-0.4, -0.2, 0);
 		drawBox(0.1f, 0.4, 0.6);
 
-		//translate back
-		glTranslated(+0.4, +0.2, 0);
-		glRotated(15, 0.0, 1.0, 0.0);
-		glRotated(-25, 0.0, 1.0, 0.0);
-		glTranslated(0, -0.35, +0.7);
-		glRotated(+25, 0.0, 1.0, 0.0);
-		glTranslated(0, +0.35, -0.7);
-		glTranslated(0, -0.35, 0);
-		glTranslated(0, +0.35, 0);
-		glRotated(-7, 0.0, 1.0, 0.0);
-	}
-	/*** here can add XYZ "left wrist rotation"***/
-	this->back_rotate(-VAL(LEFT_WRIST_X_ROTATE), -VAL(LEFT_WRIST_Y_ROTATE), -VAL(LEFT_WRIST_Z_ROTATE));
-	glTranslated(0.5, 0.0, -3.25);
-	/*** here can add XYZ "left albow rotation"***/
-	glRotated(-VAL(PICKING), 0.0, 1.0, 0.0);
-	if (VAL(IK_ENABLE))
-		this->back_rotate(-this->beta, 0, 0);
-	else
-		this->back_rotate(-VAL(LEFT_ELBOW_X_ROTATE), -VAL(LEFT_ELBOW_Y_ROTATE), -VAL(LEFT_ELBOW_Z_ROTATE));
+			//translate back
+			glTranslated(+0.4, +0.2, 0);
+			glRotated(15, 0.0, 1.0, 0.0);
+			glRotated(-25, 0.0, 1.0, 0.0);
+			glTranslated(0, -0.35, +0.7);
+			glRotated(+25, 0.0, 1.0, 0.0);
+			glTranslated(0, +0.35, -0.7);
+			glTranslated(0, -0.35, 0);
+			glTranslated(0, +0.35, 0);
+			glRotated(-7, 0.0, 1.0, 0.0);
+
+		}
+
+		/*** here can add XYZ "left wrist rotation"***/
+		glRotated(-VAL(PICKING), 0.0, 1.0, 0.0);
+		this->back_rotate(-VAL(LEFT_WRIST_X_ROTATE), -VAL(LEFT_WRIST_Y_ROTATE), -VAL(LEFT_WRIST_Z_ROTATE));
+		glTranslated(0.5, 0.0, -3.25);
+		/*** here can add XYZ "left albow rotation"***/
+		glRotated(-VAL(PICKING), 0.0, 1.0, 0.0);
+		if(VAL(IK_ENABLE))
+			this->back_rotate(-this->beta, 0, 0);
+		else
+			this->back_rotate(-VAL(LEFT_ELBOW_X_ROTATE), -VAL(LEFT_ELBOW_Y_ROTATE), -VAL(LEFT_ELBOW_Z_ROTATE));
 	glTranslated(-0.8, 0.0, -4);
 	/***translate back the left shoulder rotation***/
 	glRotated(-VAL(PICKING), 0.0, 0.0, 1.0);
@@ -814,9 +969,44 @@ void Model::draw() {
 		glRotated(-25, 0.0, 1.0, 0.0);
 		glRotated(+15, 0.0, 1.0, 0.0);
 
-		glTranslated(0.4, -0.2, 0);
-		drawBox(-0.1f, 0.4, 0.6);
-	}
+			glTranslated(0.4, -0.2, 0);
+			drawBox(-0.1f, 0.4, 0.6);
+
+			//translate back
+			glTranslated(-0.4, +0.2, 0);
+			glRotated(-15, 0.0, 1.0, 0.0);
+			glRotated(25, 0.0, 1.0, 0.0);
+			glTranslated(0, -0.35, +0.7);
+			glRotated(-25, 0.0, 1.0, 0.0);
+			glTranslated(0, +0.35, -0.7);
+			glTranslated(0, -0.35, 0);
+			glTranslated(0, +0.35, 0);
+			glRotated(7, 0.0, 1.0, 0.0);
+
+			if (VAL(METABALL)) {
+				glRotated(-10, 0.0, 1.0, 0.0);
+				glRotated(7, 0.0, 1.0, 0.0);
+				glTranslated(0.6, 0, 0.7);
+				glRotated(-90, 0, 0, 1);
+				glRotated(VAL(METABALL_SECOND_ROTATION), 0, 1, 0);
+				glRotated(VAL(METABALL_FIRST_ROTATION), 1, 0, 0);
+				glScaled(VAL(METABALL_LENGTH), 0.5, 0.8);
+
+				auto m_func = [](double x, double y, double z)
+					-> double {return	metaballFunc(-VAL(METABALL_MERGE), 0, 0, x, y, z) +
+					metaballFunc(VAL(METABALL_MERGE), 0, 0, x, y, z); };
+
+				drawMetaball(m_func(1.12, 0, 0), 0.8, m_func);
+
+				//translate back
+				//glScaled(1 / VAL(METABALL_LENGTH), 1 / 0.5, 1 / 0.8);
+				//glRotated(-VAL(METABALL_FIRST_ROTATION), 1, 0, 0);
+				//glRotated(-VAL(METABALL_SECOND_ROTATION), 0, 1, 0);
+				//glRotated(90, 0, 0, 1);
+				//glTranslated(-0.8, 0, -0.7);
+				//glRotated(-7, 0.0, 1.0, 0.0);
+			}
+		}
 
 	glPopMatrix();
 
