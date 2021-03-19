@@ -57,6 +57,10 @@ enum SampleModelControls
 	TEXTURE_MAPPING,
 	// Level Control
 	LEVEL_CONTROL,
+	// L System Control
+	LSYSTEM_SWITCH,
+	LSYSTEM_STAGE,
+	WING_FIRST_ROTATION,
 	// Met ball Control
 	METABALL, 
 	METABALL_RESOLUTION,

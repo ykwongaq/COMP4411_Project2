@@ -277,6 +277,126 @@ Model::Model(int x, int y, int w, int h, char *label) : ModelerView(x, y, w, h, 
 	this->firstTime = true;
 }
 
+
+std::vector<char> Model::gsentence1(const int stage)
+{
+	std::vector<char> current, next;
+	current.push_back('F');
+	for (int i = 0; i < stage; ++i) {
+		next.clear();
+		for (int l = 0; l < current.size(); ++l) {
+			// F -> FFF+[+F-F-F]-[-F+F+F]
+			if (current[l] == 'F') {
+				next.push_back('F');
+				next.push_back('F');
+				next.push_back('+');
+				next.push_back('[');
+				next.push_back('+');
+				next.push_back('F');
+				next.push_back('-');
+				next.push_back('F');
+				next.push_back('-');
+				next.push_back('F');
+				next.push_back(']');
+				next.push_back('-');
+				next.push_back('[');
+				next.push_back('-');
+				next.push_back('F');
+				next.push_back('+');
+				next.push_back('F');
+				next.push_back('+');
+				next.push_back('F');
+				next.push_back(']');
+			}
+			else next.push_back(current[l]);
+		}
+		current = next;
+	}
+	return current;
+}
+
+std::vector<char> Model::gsentence2(const int stage)
+{
+	std::vector<char> current, next;
+	current.push_back('F');
+	for (int i = 0; i < stage; ++i) {
+		next.clear();
+		for (int l = 0; l < current.size(); ++l) {
+			// F -> FF-[-F+F+F]+[+F-F-F]
+			if (current[l] == 'F') {
+				next.push_back('F');
+				next.push_back('F');
+				next.push_back('-');
+				next.push_back('[');
+				next.push_back('-');
+				next.push_back('F');
+				next.push_back('+');
+				next.push_back('F');
+				next.push_back('+');
+				next.push_back('F');
+				next.push_back(']');
+				next.push_back('+');
+				next.push_back('[');
+				next.push_back('+');
+				next.push_back('F');
+				next.push_back('-');
+				next.push_back('F');
+				next.push_back('-');
+				next.push_back('F');
+				next.push_back(']');
+			}
+			else next.push_back(current[l]);
+		}
+		current = next;
+	}
+	return current;
+}
+
+void Model::drawLsystem(const std::vector<char>& sentence, int option)
+{
+
+	float len = 0.15;
+	glTranslated(1, 2.5, 0);
+	for (int i = 0; i < sentence.size(); ++i) {
+		char c = sentence[i];
+		switch (c) {
+		case 'F':
+			glLineWidth(2.0f);
+			glBegin(GL_LINES);
+			glVertex3f(0.0f, 0.0f, 0.0f);
+			glVertex3f(0.0f, len, 0.0f);
+			glEnd();
+			glTranslatef(0.0f, len, 0.0f);
+			break;
+		case '+':
+			if (option == 0) {
+				glRotatef(-25, 0, 0, 1);
+			}
+			else {
+				glRotatef(-25.3, 0, 0, 1);
+			}
+			break;
+		case '-':
+			if (option == 1) {
+				glRotatef(25, 0, 0, 1);
+			}
+			else {
+				glRotatef(25.3, 0, 0, 1);
+			}
+			break;
+		case '[':
+			glPushMatrix();
+			break;
+		case ']':
+			glPopMatrix();
+			break;
+		default: break;
+		}
+	}
+	
+}
+
+
 // We are going to override (is that the right word?) the draw()
 // method of ModelerView to draw out SampleModel
 void Model::draw()
@@ -390,6 +510,38 @@ void Model::draw()
 			}
 
 		}
+		if (level >= 2) {
+			// draw the L system wings
+			if (VAL(LSYSTEM_SWITCH)) {
+				std::vector<char> sen_1 = gsentence1(VAL(LSYSTEM_STAGE));
+				std::vector<char> sen_2 = gsentence2(VAL(LSYSTEM_STAGE));
+				int option_right = 0;
+				int option_left = 1;
+
+				// left wing
+				glPushMatrix();
+				glRotated(-90, 1.0, 0.0, 0.0);
+				glTranslated(-2.0, 4.0, -3.2);
+				glRotated(-65, 0.0, 0.0, 1.0);
+
+				glRotated(VAL(WING_FIRST_ROTATION), 5, 18, 0);
+
+
+				drawLsystem(sen_1, option_left);
+
+				glPopMatrix();
+
+				//right wings
+				glPushMatrix();
+				glRotated(-90, 1.0, 0.0, 0.0);
+				glTranslated(1.1, 2.2, -3.2);
+				glRotated(65, 0.0, 0.0, 1.0);
+				glRotated(-VAL(WING_FIRST_ROTATION), 0.4, 1.0, 0.0);
+				drawLsystem(sen_2, option_right);
+				glPopMatrix();
+			}
+		}
+
 
 		//draw the head
 		glTranslated(0, 0, -6);
@@ -412,8 +564,8 @@ void Model::draw()
 
 		//translate back
 		this->back_rotate(-VAL(HEAD_X_ROTATE), -VAL(HEAD_Y_ROTATE), -VAL(HEAD_Z_ROTATE));
-		glRotated(0, 0.0, 0.0, 1.0);
-		glTranslated(0, 0, 6.5);
+		//glRotated(0, 0.0, 0.0, 1.0);
+		glTranslated(0, 0, 6.3);
 
 
 		//draw the left arm

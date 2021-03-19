@@ -5,6 +5,7 @@
 #include <GL/glu.h>
 
 #include "modelerview.h"
+#include <vector>
 
 // To make a Model, we inherit off of ModelerView
 class Model : public ModelerView {
@@ -29,6 +30,9 @@ public:
 	void drawLeftUpperLeg();
 	void drawLeftLowerLeg();
 	void drawLeftFoot();
+	std::vector<char> gsentence1(const int stage);// left wings
+	std::vector<char> gsentence2(const int stage); // right wings
+	void drawLsystem(const std::vector<char> & sentence, int option);
 
 	// Angle rotated in each flame in animation
 	static int LEFT_SHOULDER_MOVEMENT;
