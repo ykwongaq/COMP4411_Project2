@@ -8,12 +8,11 @@
 // This is a list of the controls for the SampleModel
 // We'll use these constants to access the values 
 // of the controls from the user interface.
-enum SampleModelControls
-{ 
+enum SampleModelControls {
 	// Whole body controls
 	XPOS, YPOS, ZPOS, HEIGHT,
 	// Head controls
-	HEAD_X_ROTATE,HEAD_Y_ROTATE,HEAD_Z_ROTATE,
+	HEAD_X_ROTATE, HEAD_Y_ROTATE, HEAD_Z_ROTATE,
 	// ------------------------------------- Upper Body Controls -------------------------------------
 	// Left shoulder controls
 	LEFT_SHOULDER_X_ROTATE, LEFT_SHOULDER_Y_ROTATE, LEFT_SHOULDER_Z_ROTATE,
@@ -59,6 +58,8 @@ enum SampleModelControls
 	LEVEL_CONTROL,
 	// Mood Control
 	SAD_MOOD,
+	// IK System
+	IK_ENABLE, IK_POS,
 	// Number of controls
 	NUMCONTROLS
 };
@@ -72,5 +73,5 @@ enum SampleModelControls
 // We'll be getting the instance of the application a lot; 
 // might as well have it as a macro.
 #define VAL(x) (ModelerApplication::Instance()->GetControlValue(x))
-
+//#define double rad(double deg) {return deg * 180 / M_PI;}
 #endif

@@ -4,7 +4,9 @@
 #include <FL/gl.h>
 #include <GL/glu.h>
 
+#include "vec.h"
 #include "modelerview.h"
+#include "mat.h"
 
 // To make a Model, we inherit off of ModelerView
 class Model : public ModelerView {
@@ -48,6 +50,7 @@ public:
 	const static int RIGHT_LEG_X_ROTATE_MIN			= -35;
 	const static int HEAD_Z_ROTATE_MAX				=  20;
 	const static int HEAD_Z_ROTATE_MIN				= -20;
+	
 private:
 
 	unsigned char *textureImg;
@@ -56,9 +59,29 @@ private:
 	GLuint tex;
 	bool firstTime;
 
+	Vec3f segment1Start;
+	Vec3f segment1End;
+	Vec3f segment2Start;
+	Vec3f segment2End;
+
+	float alpha, beta;
+
+	float l1, l2;
+
 	void rotate(const double &x, const double &y, const double &z);	// Rotate the body
 	void back_rotate(const double &x, const double &y, const double &z); // Back rotate the body
 	void prepare_texture();
+	float calAngle(Vec3f v1, Vec3f v2);
+	float rad(float degree);
+	float deg(float rad);
+	//Mat4f getRMatrix(float angle);
+	void drawAxis();
+	void drawArmVector();
+	void printArmVector();
+	Vec3f rotateVectorX(Vec3f v, Vec3f offset, float angle);
+	void drawVector(Vec3f v);
+	void drawLine(Vec3f v1, Vec3f v2);
+	Vec3f rotateVectorX(Vec3f v, float angle);
 };
 
 #endif
