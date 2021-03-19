@@ -555,9 +555,12 @@ void Model::draw() {
 	//drawSphere(0.25f);
 	//glTranslatef(- this->armPos[0], -this->armPos[1], -this->armPos[2]);
 
-	glTranslatef(4.5, VAL(IK_POS), 5);
-	drawSphere(0.25f);
-	glTranslatef(-4.5, -VAL(IK_POS), -5);
+	if (VAL(IK_ENABLE)) {
+		glTranslatef(4.5, VAL(IK_POS), 5);
+		drawSphere(0.25f);
+		glTranslatef(-4.5, -VAL(IK_POS), -5);
+	}
+	
 	setDiffuseColor(COLOR_GREEN);
 
 	// Handle animation
@@ -867,16 +870,16 @@ void Model::draw() {
 
 		}
 
-		/*** here can add XYZ "left wrist rotation"***/
-		glRotated(-VAL(PICKING), 0.0, 1.0, 0.0);
-		this->back_rotate(-VAL(LEFT_WRIST_X_ROTATE), -VAL(LEFT_WRIST_Y_ROTATE), -VAL(LEFT_WRIST_Z_ROTATE));
-		glTranslated(0.5, 0.0, -3.25);
-		/*** here can add XYZ "left albow rotation"***/
-		glRotated(-VAL(PICKING), 0.0, 1.0, 0.0);
-		if(VAL(IK_ENABLE))
-			this->back_rotate(-this->beta, 0, 0);
-		else
-			this->back_rotate(-VAL(LEFT_ELBOW_X_ROTATE), -VAL(LEFT_ELBOW_Y_ROTATE), -VAL(LEFT_ELBOW_Z_ROTATE));
+	/*** here can add XYZ "left wrist rotation"***/
+	glRotated(-VAL(PICKING), 0.0, 1.0, 0.0);
+	this->back_rotate(-VAL(LEFT_WRIST_X_ROTATE), -VAL(LEFT_WRIST_Y_ROTATE), -VAL(LEFT_WRIST_Z_ROTATE));
+	glTranslated(0.5, 0.0, -3.25);
+	/*** here can add XYZ "left albow rotation"***/
+	glRotated(-VAL(PICKING), 0.0, 1.0, 0.0);
+	if(VAL(IK_ENABLE))
+		this->back_rotate(-this->beta, 0, 0);
+	else
+		this->back_rotate(-VAL(LEFT_ELBOW_X_ROTATE), -VAL(LEFT_ELBOW_Y_ROTATE), -VAL(LEFT_ELBOW_Z_ROTATE));
 	glTranslated(-0.8, 0.0, -4);
 	/***translate back the left shoulder rotation***/
 	glRotated(-VAL(PICKING), 0.0, 0.0, 1.0);
