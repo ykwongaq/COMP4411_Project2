@@ -86,6 +86,7 @@ private:
 	void drawVector(Vec3f v);
 	void drawLine(Vec3f v1, Vec3f v2);
 	Vec3f rotateVectorX(Vec3f v, float angle);
+	float calAngleWithDir(Vec3f v1, Vec3f v2);
 };
 
 #endif

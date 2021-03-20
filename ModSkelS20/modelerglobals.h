@@ -70,7 +70,7 @@ enum SampleModelControls {
 	// Mood Control
 	SAD_MOOD,
 	// IK System
-	IK_ENABLE, IK_POS,
+	IK_ENABLE, IK_POS, ARM_CONSTRAIN,
 	// Number of controls
 	NUMCONTROLS
 };

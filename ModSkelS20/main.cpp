@@ -109,6 +109,7 @@ int main() {
 	// IK System
 	controls[IK_ENABLE] = ModelerControl("Enable IK System", 0, 1, 1, 0);
 	controls[IK_POS] = ModelerControl("IK X POS", -5, 5, 0.01, 4.5);
+	controls[ARM_CONSTRAIN] = ModelerControl("ARM Constrain", 10, 180, 1, 180);
 	
 	ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS); // Use the controls array to create the appropriate sliders.
 	return ModelerApplication::Instance()->Run();	// Run the application.

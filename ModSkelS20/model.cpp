@@ -339,10 +339,10 @@ void Model::drawArmVector() {
 }
 
 void Model::printArmVector() {
-	printf("s1 start = [%f, %f, %f]\n", this->segment1Start[0], this->segment1Start[1], this->segment1Start[2]);
-	printf("s1 end = [%f, %f, %f]\n", this->segment1End[0], this->segment1End[1], this->segment1End[2]);
-	printf("s2 start = [%f, %f, %f]\n", this->segment2Start[0], this->segment2Start[1], this->segment2Start[2]);
-	printf("s2 end = [%f, %f, %f]\n", this->segment2End[0], this->segment2End[1], this->segment2End[2]);
+	//printf("s1 start = [%f, %f, %f]\n", this->segment1Start[0], this->segment1Start[1], this->segment1Start[2]);
+	//printf("s1 end = [%f, %f, %f]\n", this->segment1End[0], this->segment1End[1], this->segment1End[2]);
+	//printf("s2 start = [%f, %f, %f]\n", this->segment2Start[0], this->segment2Start[1], this->segment2Start[2]);
+	//printf("s2 end = [%f, %f, %f]\n", this->segment2End[0], this->segment2End[1], this->segment2End[2]);
 }
 
 void Model::drawVector(Vec3f v) {
@@ -367,6 +367,10 @@ void Model::drawLine(Vec3f v1, Vec3f v2) {
 	glEnd();
 	glPopMatrix();
 	setDiffuseColor(COLOR_GREEN);
+}
+
+float Model::calAngleWithDir(Vec3f v1, Vec3f v2) {
+	return deg(atan2(v1[2] * v2[1] - v1[1] * v2[2], v1[2] * v2[2] + v1[1] * v2[1]));;
 }
 
 Vec3f Model::rotateVectorX(Vec3f v, float angle) {
@@ -547,7 +551,6 @@ void Model::draw() {
 	// matrix stuff.  Unless you want to fudge directly with the 
 	// projection matrix, don't bother with this ...
 	ModelerView::draw();
-
 	if(VAL(IK_ENABLE)) 
 		this->drawArmVector();
 	setDiffuseColor(COLOR_WHITE);
@@ -563,6 +566,14 @@ void Model::draw() {
 	
 	setDiffuseColor(COLOR_GREEN);
 
+	/*
+	Vec3f a = Vec3f(0, 1, 0);
+	Vec3f b = Vec3f(0, 0, 1);
+	float c = this->calAngleWithDir(a, b);
+	cout << "angle = " << c << endl;
+	float d = this->calAngleWithDir(b, a);
+	cout << "angle = " << d << endl;
+	*/
 	// Handle animation
 	if (VAL(ANIMATION) == 1) {
 		ModelerApplication *app = ModelerApplication::Instance();
@@ -710,7 +721,7 @@ void Model::draw() {
 	//for picking
 	glRotated(VAL(PICKING), 0.0, 0.0, 1.0);
 	if (VAL(IK_ENABLE)) {
-		cout << " ===================== " << endl;
+		//cout << " ===================== " << endl;
 		Vec3f target = Vec3f(4.5, VAL(IK_POS), 5);
 		Vec3f dir = target - this->segment2Start;
 		//dir.normalize();
@@ -719,10 +730,12 @@ void Model::draw() {
 		//armVector.normalize();
 
 		float angle = this->calAngle(dir, armVector);
-		printf("angle = %f\n", angle);
+		//printf("angle = %f\n", angle);
 
-		if (angle >= 10 || angle <= -10)
+		if (angle >= 10 || angle <= -10) {
 			this->segment2End = this->rotateVectorX(this->segment2End, this->segment2Start, -angle);
+		}
+			
 
 		Vec3f offset = target - this->segment2End;
 		this->segment2End += offset;
@@ -733,12 +746,26 @@ void Model::draw() {
 
 		armVector = this->segment1End - this->segment1Start;
 		float angle2 = this->calAngle(dir, armVector);
-		printf("angle2 = %f\n", angle2);
-		if (angle2 >= 10 || angle2 <= -10) {
+		
+		//cout << "before angle2 = " << angle2 << endl;
+		Vec3f segment = this->segment1End - this->segment1Start;
+		float tempAngle = this->calAngle(segment, Vec3f(0, -1, 0));
+		//cout << "tempAngle : " << tempAngle << endl;
+		float max = VAL(ARM_CONSTRAIN);
+		if (tempAngle > max) {
+			Vec3f a = Vec3f(0, -1, 0);
+			a = this->rotateVectorX(a, Vec3f(0, 0, 0), -30);
+			float b = tempAngle - max;
+			//cout << "b = " << -b << endl;
+			angle2 = -b;
+			//cout << "some angle = " << angle2 << endl;
+			this->segment1End = this->rotateVectorX(this->segment1End, this->segment1Start, -angle2);
+			this->alpha += -angle2;
+		} else if (angle2 >= 10 || angle2 <= -10) {
 			this->segment1End = this->rotateVectorX(this->segment1End, this->segment1Start, -angle2);
 			this->alpha += -angle2;
 		}
-
+		//printf("angle2 = %f\n", angle2);
 		offset = this->segment1End - this->segment2Start;
 		this->segment2Start += offset;
 		this->segment2End += offset;
@@ -748,24 +775,24 @@ void Model::draw() {
 
 		armVector = this->segment2End - this->segment2Start;
 		float angle3 = this->calAngle(dir, armVector);
-		printf("angle3 = %f\n", angle3);
+		//printf("angle3 = %f\n", angle3);
 		if (angle3 >= 10 || angle3 <= -10) {
 			this->segment2End = this->rotateVectorX(this->segment2End, this->segment2Start, -angle3);
 		}
 		 
 		Vec3f segment1 = this->segment1End - this->segment1Start;
 		Vec3f segment2 = this->segment2End - this->segment2Start;
-		float angle4 = this->calAngle(segment2, segment1);
-		printf("angle4 = %f\n", angle4);
-		this->beta = -angle4;
-
+		float angle4 = this->calAngleWithDir(segment2, segment1);
+		//printf("angle4 = %f\n", angle4);
+		this->beta = angle4;
+		
 		if (this->alpha >= 360) this->alpha -= 360;
 		if (this->alpha <= -360) this->alpha += 360;
 		if (this->beta  >= 360) this->beta -= 360;
 		if (this->beta <= -360) this->beta += 360;
 
 		//this->printArmVector();
-		printf("alpha = %f, this->beta = %f\n", this->alpha, this->beta);
+		//printf("alpha = %f, this->beta = %f\n", this->alpha, this->beta);
 	}
 
 
