@@ -29,4 +29,4 @@ BW up vector 						no
 4B metaballs						yes
 8B goal-oriented motion 				yes
  - Only support one dimensional movement due to the time limit. The movement is also not stable.
-+4B joint contraints 					yes/no
++4B joint contraints 					yes
